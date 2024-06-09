@@ -1,0 +1,13 @@
+.root {
+  width: 100%;
+  .mainWrap {
+    width: 100%;
+    display: flex;
+    .mainLeft {
+      width: 60%;
+    }
+    .mainRight {
+      width: 40%;
+    }
+  }
+}
