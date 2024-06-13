@@ -1,4 +1,4 @@
-import { MessageServiceContract } from "@config/constants";
+import { lotteryContractAddr } from "@config/constants";
 import { dispatch } from "@store/index";
 import { setSubmitModalParam } from "@store/ui";
 import { hashNotify } from "@utils/msgNotify";
@@ -25,7 +25,7 @@ export async function sendTransaction(operate, data) {
   const dataHex = "0x" + toHex(dataJson);
   try {
     const hashData = await sendTransactionWagmi({
-      to: MessageServiceContract,
+      to: lotteryContractAddr,
       value: 0,
       data: dataHex
     })
