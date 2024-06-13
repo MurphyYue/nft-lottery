@@ -29,6 +29,7 @@ const Home = () => {
       args: []
     });
     console.log(res);
+    return res;
   };
   // 白名单购买的价格
   const AllowlistPrice = async () => {

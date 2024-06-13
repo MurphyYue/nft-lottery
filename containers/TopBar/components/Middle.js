@@ -1,13 +1,33 @@
-import { useState, useEffect } from 'react';
-const Middle = () => {
-  // 设置公售开始时间2024.12.12 23:59:59
-  const saleStartTime = new Date('2024/12/12 23:59:59');
-  const [countdown, setCountdown] = useState('');
+import { useState, useEffect, use } from 'react';
+import { LotteryContractConfig } from '@config/constants'
+import { readContract } from '@wagmi/core'
+// 公售时间
+const PublicSaleStartTime = async () => {
+  const res = await readContract({
+    ...LotteryContractConfig,
+    functionName: 'PublicSaleStartTime',
+    args: []
+  });
+  return res;
+};
 
+const Middle = () => {
+  const [saleStartTime, setSaleStartTime] = useState(1717849815000);
+  const [countdown, setCountdown] = useState('');
+  useEffect(() => {
+    const fetchSaleStartTime = async () => {
+      const timestamp = await PublicSaleStartTime();
+      const date = new Date(Number(timestamp) * 1000); // 转换为毫秒
+      setSaleStartTime(date);
+    };
+
+    fetchSaleStartTime();
+  }, [])
   useEffect(() => {
     const updateCountdown = () => {
       const now = new Date().getTime();
-      const distance = saleStartTime.getTime() - now;
+
+      const distance = saleStartTime - now;
       if (distance < 0) {
         setCountdown('公售已开始');
       } else {
@@ -19,9 +39,8 @@ const Middle = () => {
       }
     };
 
-    updateCountdown(); // 立即调用一次，防止第一次渲染时显示空白
+    // updateCountdown(); // 立即调用一次，防止第一次渲染时显示空白
     const timer = setInterval(() => {
-      // console.log('update')
       updateCountdown();
     }, 1000); // 每秒更新一次
 
