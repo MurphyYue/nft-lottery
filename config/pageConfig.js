@@ -1,13 +1,18 @@
 const tabs = [
   {
-    name: 'Home',
-    path: '/',
+    name: "Home",
+    path: "/",
   },
   {
-    name: 'Genesis Member',
-    path: '/genesis_member',
+    name: "Mint",
+    path: "/mint",
     needLogin: false,
   },
-]
+  {
+    name: "My NFT",
+    path: "/my-nft",
+    needLogin: true,
+  },
+];
 
 export default tabs

@@ -5,6 +5,7 @@ import useWallet from '@wallets/useWallet';
 import { ethers, utils } from 'ethers';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 import axios from 'axios';
+import Layout from "Layout";
 
 
 const NFTDetailPage = () => {
@@ -24,7 +25,6 @@ const NFTDetailPage = () => {
       functionName: 'tokenOfOwnerByIndex',
       args: [address, ethers.BigNumber.from(index)]
     });
-    console.log(res);
     return res;
   };
   // 根据tokenId返回URI
@@ -41,15 +41,9 @@ const NFTDetailPage = () => {
       const ipfsGateway = 'https://ipfs.io/ipfs/';
       const ipfsHash = ipfsUri.replace('ipfs://', '');
       const url = `${ipfsGateway}${ipfsHash}`;
-
-      // Fetch the metadata JSON
       const { data } = await axios.get(url);
-      // setLoading(false);
-
-      // Assume the image URL is in the 'image' field of the metadata
       const image = data.image.replace('ipfs://', ipfsGateway);
       return image;
-      // setImageUrl(image);
     } catch (error) {
       console.error('Failed to fetch image:', error);
     }
@@ -87,7 +81,7 @@ const NFTDetailPage = () => {
       const tokenURI = await getTokenURI(tokenId);
 
       const imageUrl = await fetchImage(tokenURI);
-
+      console.log(tokenId, imageUrl);
       return { tokenId, imageUrl };
     } catch (error) {
       console.error('Error fetching NFT details:', error);
@@ -100,22 +94,26 @@ const NFTDetailPage = () => {
   }, [address]);
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold text-center mb-8">My NFTs</h1>
-      {loading ? (
-        <p className="text-center">Loading...</p>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {nfts.map((nft, index) => (
-            <div key={index} className="border p-4 rounded-lg shadow-lg">
-              <img src={nft.imageUrl} alt={nft.tokenId} className="mb-4 rounded" />
-              <h2 className="text-xl font-bold">{nft.name}</h2>
-              <p>Token ID: {nft.tokenId.toString()}</p>
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
+    <Layout>
+      <div className="w-screen px-16 pt-4">
+        {loading ? (
+          <p className="text-center">Loading...</p>
+        ) : (
+          <div className="grid grid-cols-1 grid-cols-4 gap-4">
+            {nfts.map((nft, index) => (
+              <div key={index} className="p-4 text-center text-xl">
+                <img
+                  src={nft.imageUrl}
+                  alt={nft.tokenId}
+                  className="mb-4 rounded w-full aspect-[4/3] object-cover rounded-3xl"
+                />
+                <p>Token ID: {nft.tokenId.toString()}</p>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </Layout>
   );
 };
 

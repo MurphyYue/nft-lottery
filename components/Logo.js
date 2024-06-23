@@ -5,55 +5,55 @@ import { useRouter } from 'next/router'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex',
-    alignItems: 'center',
-    height: '38px',
+    display: "flex",
+    alignItems: "center",
+    height: "38px",
     // paddingLeft: '16px',
-    fontWeight: '500',
-    fontSize: '24px',
-    color: '#142528',
-    overflow: 'hidden',
-    cursor: 'pointer',
+    fontWeight: "500",
+    fontSize: "24px",
+    color: "#142528",
+    overflow: "hidden",
+    cursor: "pointer",
   },
   logo: {
-    width: '32px',
-    height: '30px',
-    marginRight: '8px',
+    width: "32px",
+    height: "30px",
+    marginRight: "8px",
     flexShrink: 0,
   },
   title: {
-    height: '100%',
-    lineHeight: '38px',
-    fontFamily: 'Poppins-SemiBold',
-    fontSize: '20px',
-    color: '#FFFFFF',
+    height: "100%",
+    lineHeight: "38px",
+    fontFamily: "Helvetica-Bold",
+    fontSize: "20px",
+    color: "#151515",
     letterSpacing: 0,
-    fontWeight: '600',
+    fontWeight: "700",
   },
   close: {
-    position: 'absolute',
-    right: '20px',
-    top: '30px',
-    width: '26px',
-    height: '26px',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    cursor: 'pointer',
+    position: "absolute",
+    right: "20px",
+    top: "30px",
+    width: "26px",
+    height: "26px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    cursor: "pointer",
   },
   drawerLogo: {
-    display: 'flex',
-    alignItems: 'center',
-    width: '240px',
-    height: '40px',
-    fontSize: '24px',
-    fontWeight: '500',
-    color: '#142528'
+    display: "flex",
+    alignItems: "center",
+    width: "240px",
+    height: "40px",
+    fontSize: "24px",
+    fontWeight: "500",
+    color: "#142528",
   },
   drawerLogoIcon: {
-    width: '40px',
-    height: '40px',
-    marginRight: '6px',
+    width: "40px",
+    height: "40px",
+    marginRight: "6px",
   },
 }));
 
@@ -76,17 +76,8 @@ export default function Logo() {
 
   return (
     <div className={classes.root} onClick={jumpToIntroduce}>
-      {/* <img className={classes.logo} src={LogoIcon.src} /> */}
-      <div className={classes.title}>Nft Lottery</div>
-      {/* <Drawer
-        anchor={'left'}
-        open={drawer}
-        onClose={onClose}
-      >
-        <div className={classes.close} onClick={onClose}><Close /></div>
-        <div className={classes.drawerLogo}>
-        </div>
-      </Drawer> */}
+      <img className={classes.logo} src={LogoIcon.src} />
+      <div className={classes.title}>Eth-er Biger Stronger</div>
     </div>
   );
 }

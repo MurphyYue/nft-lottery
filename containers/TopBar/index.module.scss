@@ -1,18 +1,16 @@
 .topBar {
   width: 100%;
-  background: #181E23;
-  @media screen and (max-width: 768px) {
-    border-bottom: 1px solid #242A2D;
-  }
+  background: #fff;
+  border-bottom: 1px solid #acadae;
 }
 
 .title {
   display: flex;
-  padding: 12px 20px 0;
+  padding: 0 60px;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  background: #181E23;
+  background: #fff;
 }
 
 .back {
@@ -82,28 +80,26 @@
   font-size: 16px;
 }
 .walletBtn {
-  width: 161px;
-  height: 32px;
+  width: 162px;
+  height: 44px;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 3px;
 
   cursor: pointer;
-  // background: #242A2D;
-  // border: 1px solid rgba(48,54,57,1);
-
-  // font-family: Poppins-Regular;
+  background: #f5f5f5;
   font-size: 14px;
-  color: #FFFFFF;
+  color: #151515;
   letter-spacing: 0;
   text-align: center;
   line-height: 22px;
   font-weight: 400;
+  border-radius: 12px;
 
-  &:hover{
-    background: #555758;
-  }
+  // &:hover{
+  //   background: #555758;
+  // }
 
   .walletIcon {
     width: 26px;

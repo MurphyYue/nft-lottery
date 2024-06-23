@@ -1,0 +1,23 @@
+.root {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 24px 0;
+  .item {
+    display: flex;
+    align-items: center;
+    .itemNum {
+      font-size: 48px;
+      color: #151515;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      font-weight: 700;
+    }
+    .itemTxt {
+      font-size: 24px;
+      color: #151515;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      font-weight: 400;
+      margin: 0 12px;
+    }
+  }
+}

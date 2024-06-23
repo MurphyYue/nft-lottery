@@ -20,6 +20,7 @@
     "baseUrl": ".",
     "paths": {
       "@icons/*": ["./assets/icons/*"],
+      "@images/*": ["./assets/images/*"],
       "@styles/*": ["./assets/styles/*"],
       "@config/*": ["./config/*"],
       "@api/*": ["./api/*"],

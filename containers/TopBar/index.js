@@ -8,7 +8,8 @@ import Button from './components/Button';
 import useWallet from '@wallets/useWallet';
 import BackIcon from '@icons/arrowLeft.svg'
 import Router, { useRouter } from 'next/router';
-import Middle from './components/Middle'
+import Tabs from '@components/Tabs';
+import tabList from "@config/pageConfig";
 
 
 
@@ -25,19 +26,19 @@ function TopBar({ type, backPath, children }) {
   return (
     <div className={styles.topBar}>
       <div className={styles.title}>
-        {type === 'back' ? (
+        {type === "back" ? (
           <div className={styles.back} onClick={goBack}>
             <BackIcon />
           </div>
-        ) : <Logo minimal={address && isMobile} />
-        }
-       {<Middle />}
-        <div className={styles.rightTop}>
-          {active ? <Badge address={address} /> : <Button />}</div>
+        ) : (
+          <Logo minimal={address && isMobile} />
+        )}
+        <Tabs tabs={tabList} />
+        <div className={styles.rightTop}>{active ? <Badge address={address} /> : <Button />}</div>
       </div>
       {children}
       <AccountInfo wallet={wallet} />
-    </div >
+    </div>
   );
 }
 

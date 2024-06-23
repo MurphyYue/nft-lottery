@@ -90,7 +90,7 @@ function AccountInfo({ wallet }) {
 
   const router = useRouter()
   const goDetail = () => {
-    router.push('/detail');
+    router.push('/my-nft');
   }
 
   return (

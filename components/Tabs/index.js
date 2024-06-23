@@ -23,8 +23,7 @@ export default function Tabs({ tabs = [], className = '' }) {
     <div className={`${styles.root} ${className}`}>
       {tabs.map((tab, i) => (
         <div key={`${tab.name}-${i}`} className={`${styles.navItem} ${asPath === tab.path ? styles.active : ''}`} onClick={() => go(tab)}>
-          {asPath === tab.path ? tab.activeIcon : tab.icon}
-          {isMobile ? '' : tab.name}
+          {tab.name}
         </div>
       )
       )}
