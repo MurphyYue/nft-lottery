@@ -6,6 +6,7 @@ import { writeContract } from "@hooks/operateContract";
 import useWallet from "@wallets/useWallet";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { ethers, utils } from "ethers";
+import Footer from '@components/Footer';
 
 const Mint = () => {
   const { active, address } = useWallet();
@@ -83,10 +84,13 @@ const Mint = () => {
     <Layout>
       <div className="flex flex-col items-center justify-center w-full h-full">
         <div className="p-4 text-center text-xl ">
-          <img src={MintBg.src} className="mb-4 rounded w-full aspect-[4/3] object-cover rounded-3xl" />
+          <img src={MintBg.src} className="mb-4 w-full aspect-[4/3] object-cover rounded-3xl" />
           <button onClick={handleMint} className="px-8 py-2 bg-zinc-200 text-blalck rounded">
             Mint
           </button>
+        </div>
+        <div className="fixed bottom-0 w-full left-0">
+          <Footer />
         </div>
       </div>
     </Layout>

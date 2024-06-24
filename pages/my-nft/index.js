@@ -6,6 +6,7 @@ import { ethers, utils } from 'ethers';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 import axios from 'axios';
 import Layout from "Layout";
+import Footer from '@components/Footer';
 
 
 const NFTDetailPage = () => {
@@ -99,19 +100,22 @@ const NFTDetailPage = () => {
         {loading ? (
           <p className="text-center">Loading...</p>
         ) : (
-          <div className="grid grid-cols-1 grid-cols-4 gap-4">
+          <div className="grid grid-cols-4 gap-4">
             {nfts.map((nft, index) => (
               <div key={index} className="p-4 text-center text-xl">
                 <img
                   src={nft.imageUrl}
                   alt={nft.tokenId}
-                  className="mb-4 rounded w-full aspect-[4/3] object-cover rounded-3xl"
+                  className="mb-4 w-full aspect-[4/3] object-cover rounded-3xl"
                 />
                 <p>Token ID: {nft.tokenId.toString()}</p>
               </div>
             ))}
           </div>
         )}
+        <div className="fixed bottom-0 w-full left-0">
+          <Footer />
+        </div>
       </div>
     </Layout>
   );

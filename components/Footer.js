@@ -1,38 +1,39 @@
 import { makeStyles } from '@material-ui/core';
-import Tooltip from '@components/Tooltip';
+import Etherscan from '@icons/Etherscan.svg';
+import Twitter from '@icons/Twitter.svg';
+import Warpcaster from '@icons/Warpcaster.svg';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    position: 'absolute',
-    bottom: '0',
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
     alignItems: 'center',
     width: '100%',
-    height: '50px',
-    background: '#00000000',
-    borderTop: '1px solid rgba(8, 14, 20, 0.1)',
-  },
-  logo: {
-    display: 'inline-block',
-    lineHeight: '24px',
-    width: '24px',
-    height: '24px',
-    marginRight: '10px'
-  },
-  link: {
-    marginLeft: '10px',
-    textDecoration: 'none',
-    color: '#07a658'
+    background: '#fff',
+    height: '70px',
+    borderTop: '1px solid #e5e5e5',
+    padding: '22px 44px',
   },
   beta: {
-    display: 'inline-block',
+    display: 'flex',
+    alignItems: 'center',
     color: '#fff',
     marginLeft: '10px',
-    padding: '2px 6px',
-    borderRadius: '6px',
-    background: '#07A658',
-    cursor: 'pointer'
+    padding: '10px 16px',
+    borderRadius: '12px',
+    background: '#F7F7F7',
+    cursor: 'pointer',
+    fontSize: '14px',
+    color: '#151515',
+    letterSpacing: '0',
+    textAlign: 'center',
+    lineHeight: '16px',
+    fontWeight: '700',
+  },
+  icon: {
+    width: '24px',
+    height: '20px',
+    marginRight: '8px',
   }
 }));
 
@@ -40,12 +41,18 @@ export default function Footer() {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <span className={classes.text}>
-        Powered by Social mint
-        <Tooltip title="v2.3.3" placement='top'>
-          <div className={classes.beta}>Beta</div>
-        </Tooltip>
-      </span>
+      <div className={classes.beta}>
+        <Etherscan className={classes.icon} />
+        Etherscan
+      </div>
+      <div className={classes.beta}>
+        <Twitter className={classes.icon} />
+        Twitter
+      </div>
+      <div className={classes.beta}>
+        <Warpcaster className={classes.icon} />
+        Warpcaster
+      </div>
     </div>
   );
 }

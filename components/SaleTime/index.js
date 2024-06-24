@@ -70,8 +70,10 @@ const SaleTime = () => {
     <div className={styles.root}>
       {/* {countdown.started ? "Public sale has started!" : ""} */}
       {/* <p className="text-2xl font-semibold text-blue-500 mb-4">公售时间为：{saleStartTime.toLocaleString()}</p> */}
-      {!countdown.started ? (
-        "Public sale has started!"
+      {countdown.started ? (
+        <div className={styles.item}>
+          <div className={styles.itemNum}>Public sale has started!</div>
+        </div>
       ) : (
         <Fragment>
           <div className={styles.item}>
