@@ -3,6 +3,7 @@ import { dispatch } from '@store/index';
 import { setAccountModalOpen } from '@store/ui';
 import { useCallback } from 'react';
 import Jazzicon, { jsNumberForAddress } from 'react-jazzicon';
+import { addressShortened } from '@utils/index';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,7 +42,7 @@ export default function AddressBadge({ address, mode }) {
 
   return (
     <div className={`${classes.root} ${classes[mode || 'light']}`} onClick={openAccountInfo} >
-      {/* <p>{addressShortened(address, 4, 4)}</p> */}
+      <p>{addressShortened(address, 4, 4)}</p>
       <Jazzicon diameter={32} seed={jsNumberForAddress(address)} />
     </div>
   );
