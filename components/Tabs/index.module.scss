@@ -1,5 +1,4 @@
 .root {
-  width: 400px;
   height: 72px;
   display: flex;
   align-items: center;
@@ -15,6 +14,11 @@
   font-weight: 400;
   margin: 0 22px;
   cursor: pointer;
+  // media query for mobile devices, screen width less than 640px, font-size 14px, margin 0 12px
+  @media screen and (max-width: 640px) {
+    font-size: 14px;
+    margin: 0 12px;
+  }
 }
 
 .active {

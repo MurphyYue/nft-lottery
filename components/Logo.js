@@ -29,6 +29,10 @@ const useStyles = makeStyles((theme) => ({
     color: "#151515",
     letterSpacing: 0,
     fontWeight: "700",
+    // media max 640px display none
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
   },
   close: {
     position: "absolute",

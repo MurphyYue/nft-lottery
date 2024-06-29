@@ -1,49 +1,39 @@
 import SaleTime from "@components/SaleTime";
 import HomeBg1 from "@images/ether_diet.png";
 import HomeBg2 from "@images/ether_spoter.png";
-import Footer from '@components/Footer';
+import Footer from "@components/Footer";
 
 const Home = () => {
-
   return (
-    <div className="min-h-screen px-16">
+    <div className="min-h-screen px-4 sm:px-8 lg:px-16">
       <main>
         <SaleTime />
         <div>
-          <div className="rounded-3xl w-full mb-10 overflow-hidden relative bg-indigo-300">
-            <div className="text-5xl z-10 absolute left-10 top-10 z-1 leading-normal">
-              <p className="bg-gradient-to-r from-purple-700 via-indigo-700 to-blue-700 bg-clip-text text-transparent">
-                Eat well
-              </p>
-              <p className="bg-gradient-to-r from-green-700 via-teal-700 to-cyan-700 bg-clip-text text-transparent">
-                Healthy Diet
-              </p>
+          <div className="rounded-3xl w-full mb-10 overflow-hidden relative bg-regal-blue p-4 sm:p-8">
+            <div className="text-2xl sm:text-4xl lg:text-5xl sm:top-8 leading-normal text-white text-center">
+              <p>Become Stronger Bigger</p>
             </div>
-            <div className="w-full flex justify-center items-center my-10">
-              <img src={HomeBg2.src} className="w-7/12 object-cover z-[1]" />
+            <div className="w-full flex justify-center items-center my-4 sm:my-2 lg:my-10">
+              <img src={HomeBg2.src} className="w-full sm:w-8/12 lg:w-7/12 object-cover z-[1]" />
             </div>
           </div>
-          <div className="rounded-3xl w-full mb-10 overflow-hidden relative bg-orange-500">
-            <div className="text-4xl absolute left-10 top-10 z-1 leading-normal">
-              <p className="bg-gradient-to-r from-pink-300 via-yellow-300 to-green-300 bg-clip-text text-transparent">
-                Become Stronger Bigger
-              </p>
+          <div className="rounded-3xl w-full mb-10 overflow-hidden relative  p-4 sm:p-8 bg-regal-yellow">
+            <div className="text-2xl sm:text-4xl lg:text-5xl z-10 absolute left-4 top-4 sm:left-8 sm:top-8 leading-normal text-regal-black">
+              <p>Eat well</p>
+              <p>Healthy Diet</p>
             </div>
-            <div className="w-full flex justify-end items-center my-10">
-              <img src={HomeBg1.src} className="w-8/12 object-cover z-[1]" />
+            <div className="w-full flex justify-end items-center my-4 sm:my-2 lg:my-10">
+              <img src={HomeBg1.src} className="w-full sm:w-8/12 object-cover z-[1]" />
             </div>
           </div>
-          <div className="rounded-3xl w-full mb-10 overflow-hidden relative bg-pink-400">
-            <div className="text-5xl z-10 absolute left-10 top-10 z-1 leading-normal">
-              <p className="bg-gradient-to-r from-gray-400 via-black to-lime-600 bg-clip-text text-transparent">
-                Civilized walk
-              </p>
-              <p className="bg-gradient-to-r from-blue-400 via-indigo-800 to-purple-800 bg-clip-text text-transparent">
-                a dog
-              </p>
+
+          <div className="rounded-3xl w-full mb-10 overflow-hidden relative p-4 sm:p-8 bg-regal-pink">
+            <div className="text-2xl sm:text-4xl lg:text-5xl z-10 absolute left-4 top-4 sm:left-8 sm:top-8 leading-normal text-white">
+              <p>Civilized walk</p>
+              <p>a dog</p>
             </div>
-            <div className="w-full flex justify-center items-center my-10">
-              <img src={HomeBg2.src} className="w-7/12 object-cover z-[1]" />
+            <div className="w-full flex justify-center items-center my-4 sm:my-2 lg:my-10">
+              <img src={HomeBg2.src} className="w-full sm:w-8/12 lg:w-7/12 object-cover z-[1]" />
             </div>
           </div>
         </div>
@@ -54,5 +44,3 @@ const Home = () => {
 };
 
 export default Home;
-
-

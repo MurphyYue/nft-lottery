@@ -5,7 +5,7 @@ import Router, { useRouter } from 'next/router';
 import useWallet from '@wallets/useWallet';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 
-export default function Tabs({ tabs = [], className = '' }) {
+export default function Tabs({ tabs = [] }) {
   const { asPath, pathname } = useRouter()
   const { active } = useWallet()
   const { openConnectModal } = useConnectModal()
@@ -20,7 +20,7 @@ export default function Tabs({ tabs = [], className = '' }) {
   console.info(pathname)
 
   return (
-    <div className={`${styles.root} ${className}`}>
+    <div className={`${styles.root}`}>
       {tabs.map((tab, i) => (
         <div key={`${tab.name}-${i}`} className={`${styles.navItem} ${asPath === tab.path ? styles.active : ''}`} onClick={() => go(tab)}>
           {tab.name}

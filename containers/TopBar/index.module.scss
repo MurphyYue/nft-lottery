@@ -6,11 +6,14 @@
 
 .title {
   display: flex;
-  padding: 0 60px;
+  padding: 0 2rem;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
   background: #fff;
+  @media screen and (max-width: 640px) {
+    padding: 0 1rem;
+  }
 }
 
 .back {
