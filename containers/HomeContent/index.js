@@ -1,6 +1,7 @@
 import SaleTime from "@components/SaleTime";
 import HomeBg1 from "@images/ether_diet.png";
 import HomeBg2 from "@images/ether_spoter.png";
+import HomeBg3 from "@images/ether_3.jpg";
 import Footer from "@components/Footer";
 
 const Home = () => {
@@ -23,17 +24,17 @@ const Home = () => {
               <p>Healthy Diet</p>
             </div>
             <div className="w-full flex justify-end items-center my-4 sm:my-2 lg:my-10">
-              <img src={HomeBg1.src} className="w-full sm:w-8/12 object-cover z-[1]" />
+              <img src={HomeBg1.src} className="w-full sm:w-8/12 lg:w-7/12 object-cover z-[1]" />
             </div>
           </div>
 
-          <div className="rounded-3xl w-full mb-10 overflow-hidden relative p-4 sm:p-8 bg-regal-pink">
+          <div className="rounded-3xl w-full mb-10 overflow-hidden relative bg-regal-purple1">
             <div className="text-2xl sm:text-4xl lg:text-5xl z-10 absolute left-4 top-4 sm:left-8 sm:top-8 leading-normal text-white">
               <p>Civilized walk</p>
               <p>a dog</p>
             </div>
-            <div className="w-full flex justify-center items-center my-4 sm:my-2 lg:my-10">
-              <img src={HomeBg2.src} className="w-full sm:w-8/12 lg:w-7/12 object-cover z-[1]" />
+            <div className="w-full flex justify-end items-center mt-4 sm:mt-2 lg:mt-10">
+              <img src={HomeBg3.src} className="w-full object-cover z-[1]" />
             </div>
           </div>
         </div>

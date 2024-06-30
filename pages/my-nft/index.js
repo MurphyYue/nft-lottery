@@ -96,13 +96,15 @@ const NFTDetailPage = () => {
 
   return (
     <Layout>
-      <div className="w-screen px-16 pt-4">
+      <div className="w-screen px-4 sm:px-8 lg:px-16 pt-4">
         {loading ? (
           <p className="text-center">Loading...</p>
         ) : (
-          <div className="grid grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {nfts.map((nft, index) => (
-              <div key={index} className="p-4 text-center text-xl">
+              <div
+                key={index}
+                className="text-center text-xl">
                 <img
                   src={nft.imageUrl}
                   alt={nft.tokenId}
