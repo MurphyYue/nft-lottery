@@ -1,0 +1,35 @@
+.root {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  background: #fff;
+  height: 70px;
+  border-top: 1px solid #e5e5e5;
+
+  .beta {
+    display: flex;
+    align-items: center;
+    color: #fff;
+    margin-left: 10px;
+    padding: 10px 16px;
+    border-radius: 12px;
+    background: #F7F7F7;
+    cursor: pointer;
+    font-size: 14px;
+    color: #151515;
+    letter-spacing: 0;
+    text-align: center;
+    line-height: 16px;
+    font-weight: 700;
+    // last child padding 0
+    &:last-child {
+      margin-right: 0;
+    }
+    .icon {
+      width: 24px;
+      height: 20px;
+      margin-right: 8px;
+    };
+  }
+}
