@@ -13,6 +13,11 @@ const tabs = [
     path: "/my-nft",
     needLogin: true,
   },
+  {
+    name: "My MINT",
+    path: "/my-mint",
+    needLogin: true,
+  },
 ];
 
 export default tabs

@@ -51,7 +51,6 @@ const Mint = () => {
       args: [],
       value: price,
     });
-    console.log(res);
   };
   // publice sale mint, value = PublicSalePrice()
   const mint = async () => {

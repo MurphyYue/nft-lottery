@@ -1,6 +1,6 @@
 
 
-import { EXPLORER_HOST_SCROLL, EXPLORER_HOST_BLAST, EXPLORER_HOST_ETH } from '@config/env'
+import { EXPLORER_HOST_SCROLL, EXPLORER_HOST_BLAST, EXPLORER_HOST_POLYGON } from '@config/env'
 import { BLAST_TYPE, HOST_DATA, SCROLL_TYPE, ETH_TYPE } from '@config/chains'
 import BigNumber from 'bignumber.js'
 import { utils } from 'ethers'
@@ -93,7 +93,7 @@ export function getHostByNet(selectedNetwork) {
   } else if (selectedNetwork === SCROLL_TYPE) {
     return EXPLORER_HOST_SCROLL;
   } else if (selectedNetwork === ETH_TYPE) {
-    return EXPLORER_HOST_ETH;
+    return EXPLORER_HOST_POLYGON;
   }
 }
 export function getHostByChain(chainId) {

@@ -12,6 +12,7 @@ const nextConfig = {
     EXPLORER_HOST_BLAST: process.env.EXPLORER_HOST_BLAST,
     EXPLORER_HOST_SCROLL: process.env.EXPLORER_HOST_SCROLL,
     EXPLORER_HOST_ETH: process.env.EXPLORER_HOST_ETH,
+    EXPLORER_HOST_POLYGON: process.env.EXPLORER_HOST_POLYGON,
   },
   webpack(config) {
     config.resolve.fallback = { fs: false, net: false, tls: false };

@@ -5,7 +5,7 @@ import store from '@store/index';
 import { CookieThemeProvider } from "@lidofinance/lido-ui";
 import '@styles/index.scss';
 import WalletProvider from '@wallets/WalletProvider'
-import { EXPLORER_HOST_ETH } from '@config/env'
+import { EXPLORER_HOST_POLYGON } from '@config/env'
 import '../globals.css';
 
 function MyApp({ Component, pageProps }) {
@@ -16,7 +16,7 @@ function MyApp({ Component, pageProps }) {
       jssStyles.parentElement.removeChild(jssStyles);
     }
     // 默认网络放到localStorage存储
-  window.localStorage.setItem('EXPLORER_HOST', EXPLORER_HOST_ETH)
+  window.localStorage.setItem('EXPLORER_HOST', EXPLORER_HOST_POLYGON)
   }, []);
 
   return (

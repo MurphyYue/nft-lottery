@@ -18,6 +18,7 @@ import { publicProvider } from "wagmi/providers/public";
 import merge from "lodash/merge";
 import { bitGetWallet } from "./connecters/bitGet/bitGetWallet";
 import { IS_PROD } from "@config/env";
+import { polygon } from "@wagmi/core/chains";
 
 const WALLET_CONNECT_PROJECT_ID = "fe8894f216931b08eec4e69176736f2c";
 const APP_NAME = "v-god";
@@ -71,7 +72,7 @@ const Eth = {
 
 const WalletProvider = ({ children }) => {
 
-  let _chains =  IS_PROD === 'true' ? [Eth] : [EthSepolia];
+  let _chains = IS_PROD === "true" ? [polygon] : [polygon];
 
   const { chains, publicClient } = configureChains(_chains, [publicProvider()]);
 

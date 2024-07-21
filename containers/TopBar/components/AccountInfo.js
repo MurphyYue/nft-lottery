@@ -64,13 +64,19 @@ function AccountInfo({ wallet }) {
   const handleEtherscan = useCallback(() => {
     window.open(`${EXPLORER_HOST}/address/${address}`)
   }, [])
+  const router = useRouter();
 
   const handleClose = useCallback(() => {
     dispatch(setAccountModalOpen(false))
   }, [])
 
   const handleDisconnect = useCallback(() => {
-    disconnect()
+    disconnect();
+    // if the page is not home or mint page then redirect to home
+    const { pathname } = router;
+    if (pathname !== '/' && pathname !== '/mint') {
+      router.push("/");
+    }
     dispatch(setAccountModalOpen(false))
   }, [])
 
@@ -88,7 +94,6 @@ function AccountInfo({ wallet }) {
     address && tokenOfOwnerByIndex();
   }, [address]);
 
-  const router = useRouter()
   const goDetail = () => {
     router.push('/my-nft');
   }

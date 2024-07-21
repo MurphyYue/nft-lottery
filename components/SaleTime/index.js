@@ -13,7 +13,7 @@ const PublicSaleStartTime = async () => {
 };
 
 const SaleTime = () => {
-  const [saleStartTime, setSaleStartTime] = useState(1717849815000);
+  const [saleStartTime, setSaleStartTime] = useState(0);
   const [countdown, setCountdown] = useState({
     days: 0,
     hours: 0,
@@ -24,7 +24,7 @@ const SaleTime = () => {
   useEffect(() => {
     const fetchSaleStartTime = async () => {
       const timestamp = await PublicSaleStartTime();
-      const date = new Date(Number(timestamp) * 1000); // 转换为毫秒
+      const date = new Date(Number(timestamp) / 1000000); // 转换为毫秒
       setSaleStartTime(date);
     };
 

@@ -21,11 +21,13 @@ const NFTDetailPage = () => {
       openConnectModal();
       return;
     }
+    console.log("tokenOfOwnerByIndex", address, ethers.BigNumber.from(index));
     const res = await readContract({
       ...LotteryContractConfig,
       functionName: 'tokenOfOwnerByIndex',
       args: [address, ethers.BigNumber.from(index)]
     });
+    console.log("tokenOfOwnerByIndex", res);
     return res;
   };
   // 根据tokenId返回URI
