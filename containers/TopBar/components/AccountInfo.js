@@ -82,16 +82,20 @@ function AccountInfo({ wallet }) {
 
   const [nftToken, setNftToken] = useState('');
   const tokenOfOwnerByIndex = async () => {
-    const res = await readContract({
-      ...LotteryContractConfig,
-      functionName: 'tokenOfOwnerByIndex',
-      args: [address, ethers.BigNumber.from(0)]
-    });
-    console.log(res);
-    setNftToken(res.toString());
+    try {
+      const res = await readContract({
+        ...LotteryContractConfig,
+        functionName: 'tokenOfOwnerByIndex',
+        args: [address, ethers.BigNumber.from(0)]
+      });
+      console.log(res);
+      setNftToken(res.toString());
+    } catch (error) {
+      console.log(error);
+    }
   };
   useEffect(() => {
-    address && tokenOfOwnerByIndex();
+    // address && tokenOfOwnerByIndex();
   }, [address]);
 
   const goDetail = () => {
@@ -101,7 +105,7 @@ function AccountInfo({ wallet }) {
   return (
     <Modal open={open} title={'Account'} onClose={handleClose}>
       <div className={classes.box}>
-        <div className='flex flex-1 mb-1'>
+        {/* <div className='flex flex-1 mb-1'>
           <ButtonIcon
             onClick={(goDetail)}
             icon={<External />}
@@ -110,7 +114,7 @@ function AccountInfo({ wallet }) {
           >
             my token: {nftToken}
           </ButtonIcon>
-        </div>
+        </div> */}
         <div className={classes.account}>
           <Button
             className={classes.disconnect}

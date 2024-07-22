@@ -7,6 +7,7 @@ import { useConnectModal } from '@rainbow-me/rainbowkit';
 import axios from 'axios';
 import Layout from "Layout";
 import Footer from '@components/Footer';
+import { Loader } from '@lidofinance/lido-ui';
 
 
 const NFTDetailPage = () => {
@@ -21,14 +22,18 @@ const NFTDetailPage = () => {
       openConnectModal();
       return;
     }
-    console.log("tokenOfOwnerByIndex", address, ethers.BigNumber.from(index));
-    const res = await readContract({
-      ...LotteryContractConfig,
-      functionName: 'tokenOfOwnerByIndex',
-      args: [address, ethers.BigNumber.from(index)]
-    });
-    console.log("tokenOfOwnerByIndex", res);
-    return res;
+    console.log(index)
+    try {
+      const res = await readContract({
+        ...LotteryContractConfig,
+        functionName: 'tokenOfOwnerByIndex',
+        args: [address, ethers.BigNumber.from(index)]
+      });
+      console.log(res);
+      return res;
+    } catch (error) {
+      console.log('no token');
+    }
   };
   // 根据tokenId返回URI
   const getTokenURI = async (tokenId) => {
@@ -37,6 +42,7 @@ const NFTDetailPage = () => {
       functionName: 'tokenURI',
       args: [tokenId]
     });
+    console.log('getTokenURI',res);
     return res;
   };
   const fetchImage = async (ipfsUri) => {
@@ -64,6 +70,7 @@ const NFTDetailPage = () => {
         functionName: 'balanceOf',
         args: [address],
       });
+      console.log(balance);
       const nftPromises = [];
       for (let i = 0; i < Number(balance); i++) {
         nftPromises.push(fetchNFTByIndex(i));
@@ -79,6 +86,7 @@ const NFTDetailPage = () => {
 
   const fetchNFTByIndex = async (index) => {
     try {
+      console.log(index)
       const tokenId = await tokenOfOwnerByIndex(index);
 
       const tokenURI = await getTokenURI(tokenId);
@@ -100,7 +108,7 @@ const NFTDetailPage = () => {
     <Layout>
       <div className="w-screen px-4 sm:px-8 lg:px-16 pt-4">
         {loading ? (
-          <p className="text-center">Loading...</p>
+          <div className="flex justify-center items-center h-96"><Loader /></div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {nfts.map((nft, index) => (

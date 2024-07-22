@@ -7,27 +7,35 @@ import { useConnectModal } from "@rainbow-me/rainbowkit";
 import axios from "axios";
 import Layout from "Layout";
 import Footer from "@components/Footer";
+import { Loader, Button } from '@lidofinance/lido-ui';
+import { notify } from '@utils/msgNotify';
 
 const NFTDetailPage = () => {
   const { active, address } = useWallet();
   const { openConnectModal } = useConnectModal();
   const [loading, setLoading] = useState(true);
-  const [nfts, setNfts] = useState([]);
+  const [mintedNft, setMintedNft] = useState({});
   const [releasable, setReleasable] = useState(0);
   const [released, setReleased] = useState(0);
+  const [releasing, setReleasing] = useState(false);
 
-  // owner的第index的NFT的tokenid
-  const tokenOfOwnerByIndex = async (index = 0) => {
+  // 查询某个地址已经mint的token id，0n表示没有mint
+  const tokenIdOfMinter = async (index = 0) => {
     if (!active) {
       openConnectModal();
       return;
     }
-    const res = await readContract({
-      ...LotteryContractConfig,
-      functionName: "tokenOfOwnerByIndex",
-      args: [address, ethers.BigNumber.from(index)],
-    });
-    return res;
+    try {
+      const res = await readContract({
+        ...LotteryContractConfig,
+        functionName: "tokenIdOfMinter",
+        args: [address],
+      });
+      return res;
+    } catch (error) {
+      console.log('no token');
+    }
+
   };
   // 根据tokenId返回URI
   const getTokenURI = async (tokenId) => {
@@ -50,41 +58,17 @@ const NFTDetailPage = () => {
       console.error("Failed to fetch image:", error);
     }
   };
-  const fetchNFTDetails = async () => {
-    if (!active) {
-      openConnectModal();
-      return;
-    }
 
+  const fetchNFT = async () => {
     try {
-      // Get the number of NFTs owned by the user
-      const balance = await readContract({
-        ...LotteryContractConfig,
-        functionName: "balanceOf",
-        args: [address],
-      });
-      const nftPromises = [];
-      for (let i = 0; i < Number(balance); i++) {
-        nftPromises.push(fetchNFTByIndex(i));
+      const tokenId = await tokenIdOfMinter();
+      if (tokenId.toString() === "0") {
+        return;
       }
-
-      const nftDetails = await Promise.all(nftPromises);
-      setNfts(nftDetails);
-      setLoading(false);
-    } catch (error) {
-      console.error("Error fetching NFTs:", error);
-    }
-  };
-
-  const fetchNFTByIndex = async (index) => {
-    try {
-      const tokenId = await tokenOfOwnerByIndex(index);
-
       const tokenURI = await getTokenURI(tokenId);
 
       const imageUrl = await fetchImage(tokenURI);
-      console.log(tokenId, imageUrl);
-      return { tokenId, imageUrl };
+      setMintedNft({ tokenId, imageUrl });
     } catch (error) {
       console.error("Error fetching NFT details:", error);
       return null;
@@ -113,19 +97,25 @@ const NFTDetailPage = () => {
     setReleased(Number(res));
   };
   // 领取版税
-  const fetchRelease= async () => {
-    setLoading(true);
-    await readContract({
-      ...ClaimContractConfig,
-      functionName: "release",
-      args: [address],
-    });
-    setLoading(false);
-    await fetchReleased();
+  const fetchRelease = async () => {
+    setReleasing(true);
+    try {
+      await readContract({
+        ...ClaimContractConfig,
+        functionName: "release",
+        args: [address],
+      });
+      setReleasing(false);
+      await fetchReleased();
+    } catch (error) {
+      notify('You have no shares', 'error');
+    } finally {
+      setReleasing(false);
+    }
   };
 
   useEffect(() => {
-    // address && fetchNFTDetails();
+    address && fetchNFT();
     address && fetchReleasable();
     address && fetchReleased();
   }, [address]);
@@ -134,14 +124,14 @@ const NFTDetailPage = () => {
     <Layout>
       <div className="w-screen px-4 sm:px-8 lg:px-16 pt-4">
         {loading ? (
-          <p className="text-center">Loading...</p>
+          <div className="flex justify-center items-center h-96"><Loader /></div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {nfts.map((nft, index) => (
-              <div key={index} className="text-center text-xl">
+          mintedNft.imageUrl ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="text-center text-xl">
                 <img
-                  src={nft.imageUrl}
-                  alt={nft.tokenId}
+                  src={mintedNft.imageUrl}
+                  alt={mintedNft.tokenId}
                   className="mb-4 w-full aspect-[4/3] object-cover rounded-3xl"
                 />
                 <div className="flex justify-between items-center">
@@ -151,16 +141,25 @@ const NFTDetailPage = () => {
                   <span className="text-slate-500">
                     Released： <span className="text-black">{released}</span>
                   </span>
-                  <button
+                  <Button
+                    color="primary"
+                    size="xs"
+                    themeOverride="light"
+                    variant="filled"
                     onClick={fetchRelease}
-                    className="px-4 py-2 bg-green-500 text-white rounded m-2"
+                    disabled={releasable === 0}
+                    loading={releasing}
                   >
                     Release
-                  </button>
+                  </Button>
                 </div>
               </div>
-            ))}
-          </div>
+            </div>
+          ) : (
+            <div className="text-center text-xl">
+              <p>No NFT minted</p>
+            </div>
+          )
         )}
         <div className="fixed bottom-0 w-full left-0">
           <Footer />

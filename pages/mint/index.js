@@ -1,4 +1,5 @@
 import Layout from "Layout";
+import { useState, useEffect } from "react";
 import MintBg from "@images/mint_bg.png";
 import { LotteryContractConfig } from "@config/constants";
 import { readContract } from "@wagmi/core";
@@ -7,10 +8,13 @@ import useWallet from "@wallets/useWallet";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { ethers, utils } from "ethers";
 import Footer from '@components/Footer';
+import { notify } from '@utils/msgNotify';
+import { Button } from '@lidofinance/lido-ui';
 
 const Mint = () => {
   const { active, address } = useWallet();
   const { openConnectModal } = useConnectModal();
+  const [minting, setMinting] = useState(false);
   // allowlist price
   const AllowlistPrice = async () => {
     const res = await readContract({
@@ -18,7 +22,6 @@ const Mint = () => {
       functionName: "AllowlistPrice",
       args: [],
     });
-    console.log(utils.formatEther(res));
     return Promise.resolve(res);
   };
   // publice sale price
@@ -70,6 +73,14 @@ const Mint = () => {
       openConnectModal();
       return;
     }
+    if (hasMinted) {
+      notify('You have already minted', 'error');
+      return;
+    }
+    if (isPublicSaleTime) {
+      await mint();
+      return;
+    }
     // first check address is in allowlist, if not, call mint function, else call allowlistMint function.
     const isAllowlist = await allowlist();
     if (isAllowlist) {
@@ -79,14 +90,52 @@ const Mint = () => {
     }
 
   };
+  const PublicSaleStartTime = async () => {
+    const res = await readContract({
+      ...LotteryContractConfig,
+      functionName: "PublicSaleStartTime",
+      args: [],
+    });
+    return res;
+  };
+  const [isPublicSaleTime, setIsPublicSaleTime] = useState(false);
+  const [hasMinted, setHasMinted] = useState(false);
+  // 查询某个地址已经mint的token id，0n表示没有mint
+  const tokenIdOfMinter = async () => {
+    const res = await readContract({
+      ...LotteryContractConfig,
+      functionName: "tokenIdOfMinter",
+      args: [address],
+    });
+    console.log(res.toString());
+    setHasMinted(res.toString() !== "0");
+  };
+  useEffect(() => {
+    const fetchSaleStartTime = async () => {
+      const timestamp = await PublicSaleStartTime();
+      const publicSaleTime = new Date(Number(timestamp) / 1000000); // 转换为毫秒
+      const now = new Date().getTime();
+      setIsPublicSaleTime(publicSaleTime < now);
+    };
+    fetchSaleStartTime();
+    tokenIdOfMinter();
+  }, []);
   return (
     <Layout>
       <div className="flex flex-col items-center justify-center w-full h-full">
         <div className="p-4 text-center text-xl ">
           <img src={MintBg.src} className="mb-4 w-full aspect-[4/3] object-cover rounded-3xl" />
-          <button onClick={handleMint} className="px-8 py-2 bg-zinc-200 text-blalck rounded">
+          <Button
+            color="primary"
+            size="xs"
+            themeOverride="light"
+            variant="filled"
+            onClick={handleMint}
+            disabled={hasMinted}
+            loading={minting}
+          >
             Mint
-          </button>
+          </Button>
         </div>
         <div className="fixed bottom-0 w-full left-0">
           <Footer />
