@@ -7,6 +7,7 @@ import '@styles/index.scss';
 import WalletProvider from '@wallets/WalletProvider'
 import { EXPLORER_HOST_POLYGON } from '@config/env'
 import '../globals.css';
+export const runtime = 'experimental-edge';
 
 function MyApp({ Component, pageProps }) {
   useEffect(() => {

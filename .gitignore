@@ -21,4 +21,5 @@ out/
 html/
 
 .vscode/
+.vercel/
 # End of https://www.toptal.com/developers/gitignore/api/react
