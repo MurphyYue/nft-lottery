@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build:test": "rm -rf out && cross-env NODE_ENV=test next build",
-    "build:prod": "rm -rf out && cross-env NODE_ENV=production next build",
+    "build": "rm -rf out && next build",
     "start": "next start -p ${PORT:-3000}",
     "lint": "eslint --ext .js --ignore-path .gitignore .",
     "lint:fix": "yarn lint --fix",
