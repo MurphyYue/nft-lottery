@@ -10,7 +10,8 @@
     "lint": "eslint --ext .js --ignore-path .gitignore .",
     "lint:fix": "yarn lint --fix",
     "preview": "http-server -p 8000",
-    "update": "pnpm install && pnpm prune"
+    "update": "pnpm install && pnpm prune",
+    "pages:build": "npx @cloudflare/next-on-pages"
   },
   "dependencies": {
     "@lidofinance/lido-ui": "^3.8.1",
@@ -47,6 +48,7 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-optional-chaining": "^7.21.0",
+    "@cloudflare/next-on-pages": "^1.13.2",
     "cross-env": "^7.0.3",
     "eslint": "^7.12.1",
     "eslint-config-airbnb": "^18.2.0",
