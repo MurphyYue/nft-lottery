@@ -1,4 +1,4 @@
-# v-god
+# nft-lottery
 
 ## Development
 ```bash
