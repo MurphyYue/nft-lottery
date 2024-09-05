@@ -128,7 +128,7 @@ const Mint = () => {
           <Button
             color="primary"
             size="xs"
-            themeOverride="light"
+            themeoverride="light"
             variant="filled"
             onClick={handleMint}
             disabled={hasMinted}
