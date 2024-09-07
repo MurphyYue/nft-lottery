@@ -1,5 +1,5 @@
 import { ToastSuccess } from "@lidofinance/lido-ui";
-import { EXPLORER_HOST_POLYGON } from '@config/env';
+import { EXPLORER_HOST_ETH } from '@config/env';
 import Error from '@icons/error.svg?url'
 import Right from '@icons/right.svg?url'
 import Info from '@icons/info.svg?url'
@@ -37,7 +37,7 @@ export const notify = (text, type = 'success') => {
 };
 
 export const hashNotify = (hash, type = 'success', title) => {
-  const host = window.localStorage.getItem('EXPLORER_HOST') || EXPLORER_HOST_POLYGON;
+  const host = window.localStorage.getItem('EXPLORER_HOST') || EXPLORER_HOST_ETH;
   ToastSuccess(
     <div className={'toastMain'}>
       <img className={'toastSvg'} src={type === 'success' ? Right.src : Error.src} />

@@ -2,17 +2,26 @@ import { useState, useEffect, Fragment } from "react";
 import styles from "./index.module.scss";
 import { LotteryContractConfig } from "@config/constants";
 import { readContract } from "@wagmi/core";
+import { useSelector } from "react-redux";
 // 公售时间
 const PublicSaleStartTime = async () => {
-  const res = await readContract({
-    ...LotteryContractConfig,
-    functionName: "PublicSaleStartTime",
-    args: [],
-  });
-  return res;
+  try {
+    const res = await readContract({
+      ...LotteryContractConfig,
+      functionName: "PublicSaleStartTime",
+      args: [],
+    });
+    console.log("PublicSaleStartTime", res);
+    return res;
+  } catch (error) {
+    console.error("Error fetching PublicSaleStartTime:", error);
+    return 0;
+  }
 };
 
 const SaleTime = () => {
+  // const selectedNetwork = useSelector((state) => state.user.selectedNetwork);
+  // console.log("selectedNetwork", selectedNetwork);
   const [saleStartTime, setSaleStartTime] = useState(0);
   const [countdown, setCountdown] = useState({
     days: 0,
@@ -24,7 +33,8 @@ const SaleTime = () => {
   useEffect(() => {
     const fetchSaleStartTime = async () => {
       const timestamp = await PublicSaleStartTime();
-      const date = new Date(Number(timestamp) / 1000000); // 转换为毫秒
+      const date = new Date(Number(timestamp) / 100).getTime(); // 转换为毫秒
+      console.log("timestamp", date, new Date().getTime());
       setSaleStartTime(date);
     };
 
@@ -33,7 +43,6 @@ const SaleTime = () => {
   useEffect(() => {
     const updateCountdown = () => {
       const now = new Date().getTime();
-
       const distance = saleStartTime - now;
       if (distance < 0) {
         // setCountdown("Public sale has started!");

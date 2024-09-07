@@ -78,7 +78,7 @@ const Mint = () => {
       return;
     }
     if (isPublicSaleTime) {
-      await mint();
+      await allowlistMint();
       return;
     }
     // first check address is in allowlist, if not, call mint function, else call allowlistMint function.
@@ -91,12 +91,18 @@ const Mint = () => {
 
   };
   const PublicSaleStartTime = async () => {
-    const res = await readContract({
-      ...LotteryContractConfig,
-      functionName: "PublicSaleStartTime",
-      args: [],
-    });
-    return res;
+    try {
+      const res = await readContract({
+        ...LotteryContractConfig,
+        functionName: "PublicSaleStartTime",
+        args: [],
+      });
+      console.log("PublicSaleStartTime", res);
+      return res;
+    } catch (error) {
+      console.error("Error fetching PublicSaleStartTime:", error);
+      return 0;
+    }
   };
   const [isPublicSaleTime, setIsPublicSaleTime] = useState(false);
   const [hasMinted, setHasMinted] = useState(false);

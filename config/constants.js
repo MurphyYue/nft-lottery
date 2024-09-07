@@ -1,16 +1,16 @@
-import LotteryABI from '@abis/LotteryABI.json'
-import PaymentSplitter from "@abis/PaymentSplitter.json";
+import VGodABI from "@abis/VGodABI.json";
+import PaymentSplitterReferenceABI from "@abis/PaymentSplitterReferenceABI.json";
 
 
-export const lotteryContractAddr = "0xe14d2CC014E965a81215de01b7EeA868D23E0Be0";
-export const claimContractAddr = "0xd9075770159aee5fa242078bab717f443b3cc607";
+export const VGodAddr = "0xA1d44063E25b6992893DdD3963cb589157CDbA69";
+export const PaymentSplitterReferenceAddr = "0x807AC06B90B3442334A80CD082622663163dF00C";
 
 
 export const LotteryContractConfig = {
-  address: lotteryContractAddr,
-  abi: LotteryABI,
+  address: VGodAddr,
+  abi: VGodABI,
 }
 export const ClaimContractConfig = {
-  address: claimContractAddr,
-  abi: PaymentSplitter,
+  address: PaymentSplitterReferenceAddr,
+  abi: PaymentSplitterReferenceABI,
 };

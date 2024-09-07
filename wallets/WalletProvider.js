@@ -11,7 +11,7 @@ import {
   coinbaseWallet,
   rainbowWallet,
   imTokenWallet,
-  okxWallet
+  okxWallet,
 } from "@rainbow-me/rainbowkit/wallets";
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
 import { publicProvider } from "wagmi/providers/public";
@@ -32,47 +32,46 @@ const walletTheme = merge(lightTheme(), {
 
 const EthSepolia = {
   id: 11155111,
-  name: 'ETH Sepolia',
-  network: 'eth-sepolia',
+  name: "ETH Sepolia",
+  network: "eth-sepolia",
   nativeCurrency: {
     decimals: 18,
-    name: 'ETH Sepolia',
-    symbol: 'ETH',
+    name: "ETH Sepolia",
+    symbol: "ETH",
   },
   rpcUrls: {
-    public: { http: ['https://sepolia.infura.io/v3/47dbcd9bab854381a4c9787b1a1513a8'] },
-    default: { http: ['https://sepolia.infura.io/v3/47dbcd9bab854381a4c9787b1a1513a8'] },
+    public: { http: ["https://sepolia.infura.io/v3/47dbcd9bab854381a4c9787b1a1513a8"] },
+    default: { http: ["https://sepolia.infura.io/v3/47dbcd9bab854381a4c9787b1a1513a8"] },
   },
   blockExplorers: {
-    default: { name: 'Scroll Sepolia', url: 'https://sepolia.scrollscan.com' },
-    etherscan: { name: 'Scroll Sepolia', url: 'https://sepolia.scrollscan.com' },
+    default: { name: "Scroll Sepolia", url: "https://sepolia.scrollscan.com" },
+    etherscan: { name: "Scroll Sepolia", url: "https://sepolia.scrollscan.com" },
   },
   testnet: true,
 };
 
 const Eth = {
   id: 1,
-  name: 'Eth',
-  network: 'ethereum',
+  name: "Eth",
+  network: "ethereum",
   nativeCurrency: {
     decimals: 18,
-    name: 'Eth',
-    symbol: 'ETH',
+    name: "Eth",
+    symbol: "ETH",
   },
   rpcUrls: {
-    public: { http: ['https://eth.llamarpc.com'] },
-    default: { http: ['https://eth.llamarpc.com'] },
+    public: { http: ["https://eth.llamarpc.com"] },
+    default: { http: ["https://eth.llamarpc.com"] },
   },
   blockExplorers: {
-    default: { name: 'Eth', url: 'https://etherscan.io' },
-    etherscan: { name: 'Eth', url: 'https://etherscan.io' },
+    default: { name: "Eth", url: "https://etherscan.io" },
+    etherscan: { name: "Eth", url: "https://etherscan.io" },
   },
   testnet: false,
 };
 
 const WalletProvider = ({ children }) => {
-
-  let _chains = IS_PROD === "true" ? [polygon] : [polygon];
+  let _chains = IS_PROD === "true" ? [Eth] : [Eth];
 
   const { chains, publicClient } = configureChains(_chains, [publicProvider()]);
 
@@ -113,7 +112,7 @@ const WalletProvider = ({ children }) => {
 
   return (
     <WagmiConfig config={wagmiConfig}>
-      <RainbowKitProvider locale={'en-US'} theme={walletTheme} chains={chains} modalSize="compact">
+      <RainbowKitProvider locale={"en-US"} theme={walletTheme} chains={chains} modalSize="compact">
         {children}
       </RainbowKitProvider>
     </WagmiConfig>
@@ -121,4 +120,3 @@ const WalletProvider = ({ children }) => {
 };
 
 export default WalletProvider;
-

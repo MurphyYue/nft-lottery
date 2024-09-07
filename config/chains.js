@@ -3,6 +3,7 @@ import { IS_PROD } from "./env";
 export const POLYGON = 137;
 export const BLAST = 81457;
 export const SCROLL = 534352;
+export const ETH = 1;
 export const BLAST_TEST = 168587773;
 export const SCROLL_TEST = 534351;
 export const ETH_TEST = 11155111;
@@ -10,6 +11,7 @@ export const ETH_TEST = 11155111;
 export const BLAST_TYPE = 'blast';
 export const SCROLL_TYPE = 'scroll';
 export const ETH_TYPE = 'eth';
+export const POLYGON_TYPE = 'polygon';
 
 export const DEFAULT_CHAIN_ID = BLAST;
 
@@ -118,7 +120,7 @@ export function getChainName(chainId) {
 export function getExplorerUrl(chainId) {
   if (chainId === POLYGON) {
     return "https://polygonscan.com/";
-  } if (chainId === BLAST) {
+  } else if (chainId === BLAST) {
     return "https://blastscan.io/";
   } else if (chainId === BLAST_TEST) {
     return "https://testnet.blastscan.io/";
@@ -139,7 +141,9 @@ export function selectChainId(netType) {
       case SCROLL_TYPE:
         return SCROLL;
       case ETH_TYPE:
-        return ETH_TEST;
+        return ETH;
+      case POLYGON_TYPE:
+        return POLYGON;
       default:
         return BLAST;
     }
@@ -151,6 +155,8 @@ export function selectChainId(netType) {
         return SCROLL_TEST;
       case ETH_TYPE:
         return ETH_TEST;
+      case POLYGON_TYPE:
+        return POLYGON;
       default:
         return BLAST_TEST;
     }
