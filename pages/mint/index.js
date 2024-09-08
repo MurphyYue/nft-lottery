@@ -79,7 +79,7 @@ const Mint = () => {
     }
     if (isPublicSaleTime) {
       // TODO: change to mint
-      await allowlistMint();
+      await mint();
       return;
     }
     // first check address is in allowlist, if not, call mint function, else call allowlistMint function.
@@ -109,20 +109,22 @@ const Mint = () => {
   const [hasMinted, setHasMinted] = useState(false);
   // 查询某个地址已经mint的token id，0n表示没有mint
   const tokenIdOfMinter = async () => {
-    const res = await readContract({
-      ...LotteryContractConfig,
-      functionName: "tokenIdOfMinter",
-      args: [address],
-    });
-    console.log(res.toString());
-    setHasMinted(res.toString() !== "0");
+    try {
+      const res = await readContract({
+        ...LotteryContractConfig,
+        functionName: "tokenIdOfMinter",
+        args: [address],
+      });
+      setHasMinted(res.toString() !== "0");
+    } catch (error) {
+      console.error("Error fetching tokenIdOfMinter:", error);
+    }
   };
   useEffect(() => {
     const fetchSaleStartTime = async () => {
       const timestamp = await PublicSaleStartTime();
-      const publicSaleTime = new Date(Number(timestamp) / 100).getTime(); // 转换为毫秒
-      const now = new Date().getTime();
-      console.log("publicSaleTime", publicSaleTime, now); 
+      const publicSaleTime = new Date(Number(timestamp)).getTime(); // 转换为秒
+      const now = parseInt(new Date().getTime() / 1000);
       setIsPublicSaleTime(publicSaleTime < now);
     };
     fetchSaleStartTime();

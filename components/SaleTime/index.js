@@ -32,7 +32,7 @@ const SaleTime = () => {
   useEffect(() => {
     const fetchSaleStartTime = async () => {
       const timestamp = await PublicSaleStartTime();
-      const date = new Date(Number(timestamp) / 100).getTime(); // 转换为毫秒
+      const date = new Date(Number(timestamp)).getTime(); // 转换为秒
       setSaleStartTime(date);
     };
 
@@ -40,7 +40,7 @@ const SaleTime = () => {
   }, []);
   useEffect(() => {
     const updateCountdown = () => {
-      const now = new Date().getTime();
+      const now = parseInt(new Date().getTime() / 1000);
       const distance = saleStartTime - now;
       if (distance < 0) {
         // setCountdown("Public sale has started!");
@@ -52,10 +52,10 @@ const SaleTime = () => {
           started: true,
         });
       } else {
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        const days = Math.floor(distance / (60 * 60 * 24));
+        const hours = Math.floor((distance % (60 * 60 * 24)) / (60 * 60));
+        const minutes = Math.floor((distance % (60 * 60)) / (60));
+        const seconds = Math.floor((distance % (60)));
         setCountdown({
           days,
           hours,
