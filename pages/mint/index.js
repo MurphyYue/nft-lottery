@@ -78,6 +78,7 @@ const Mint = () => {
       return;
     }
     if (isPublicSaleTime) {
+      // TODO: change to mint
       await allowlistMint();
       return;
     }
@@ -119,8 +120,9 @@ const Mint = () => {
   useEffect(() => {
     const fetchSaleStartTime = async () => {
       const timestamp = await PublicSaleStartTime();
-      const publicSaleTime = new Date(Number(timestamp) / 1000000); // 转换为毫秒
+      const publicSaleTime = new Date(Number(timestamp) / 100).getTime(); // 转换为毫秒
       const now = new Date().getTime();
+      console.log("publicSaleTime", publicSaleTime, now); 
       setIsPublicSaleTime(publicSaleTime < now);
     };
     fetchSaleStartTime();

@@ -11,7 +11,6 @@ const PublicSaleStartTime = async () => {
       functionName: "PublicSaleStartTime",
       args: [],
     });
-    console.log("PublicSaleStartTime", res);
     return res;
   } catch (error) {
     console.error("Error fetching PublicSaleStartTime:", error);
@@ -34,7 +33,6 @@ const SaleTime = () => {
     const fetchSaleStartTime = async () => {
       const timestamp = await PublicSaleStartTime();
       const date = new Date(Number(timestamp) / 100).getTime(); // 转换为毫秒
-      console.log("timestamp", date, new Date().getTime());
       setSaleStartTime(date);
     };
 
