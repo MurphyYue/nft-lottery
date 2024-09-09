@@ -182,7 +182,7 @@ const NFTDetailPage = () => {
             </div>
           </div>
         ) : (
-          <div className="text-center text-xl">
+          <div className="text-center text-xl mt-10">
             <p>No NFT minted</p>
           </div>
         )}
