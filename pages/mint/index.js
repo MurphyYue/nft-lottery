@@ -6,36 +6,35 @@ import { readContract } from "@wagmi/core";
 import { writeContract } from "@hooks/operateContract";
 import useWallet from "@wallets/useWallet";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
-import { ethers, utils } from "ethers";
-import Footer from '@components/Footer';
-import { notify } from '@utils/msgNotify';
-import { Button } from '@lidofinance/lido-ui';
+import { utils } from "ethers";
+import Footer from "@components/Footer";
+import { notify } from "@utils/msgNotify";
+import { Button } from "@lidofinance/lido-ui";
 
-const Mint = () => {
-  const { active, address } = useWallet();
-  const { openConnectModal } = useConnectModal();
-  const [minting, setMinting] = useState(false);
-  // allowlist price
-  const AllowlistPrice = async () => {
+const useContractData = (address) => {
+  const [isPublicSaleTime, setIsPublicSaleTime] = useState(false);
+  const [hasMinted, setHasMinted] = useState(false);
+
+  const fetchAllowlistPrice = async () => {
     const res = await readContract({
       ...LotteryContractConfig,
       functionName: "AllowlistPrice",
       args: [],
     });
-    return Promise.resolve(res);
+    return res;
   };
-  // publice sale price
-  const PublicSalePrice = async () => {
+
+  const fetchPublicSalePrice = async () => {
     const res = await readContract({
       ...LotteryContractConfig,
       functionName: "PublicSalePrice",
       args: [],
     });
     console.log(utils.formatEther(res));
-    return Promise.resolve(res);
+    return res;
   };
-  // check address is in allowlist
-  const allowlist = async () => {
+
+  const checkAllowlist = async () => {
     const res = await readContract({
       ...LotteryContractConfig,
       functionName: "allowlist",
@@ -44,54 +43,8 @@ const Mint = () => {
     console.log(res);
     return res;
   };
-  // allowlistMint adress mint，value = AllowlistPrice()
-  const allowlistMint = async () => {
-    const price = await AllowlistPrice();
-    console.log(price);
-    await writeContract("allowlistMint", {
-      ...LotteryContractConfig,
-      functionName: "allowlistMint",
-      args: [],
-      value: price,
-    });
-  };
-  // publice sale mint, value = PublicSalePrice()
-  const mint = async () => {
-    const price = await PublicSalePrice();
-    console.log(price);
-    await writeContract("mint", {
-      ...LotteryContractConfig,
-      functionName: "mint",
-      args: [],
-      value: price,
-    });
-    // console.log(res);
-  };
-  // mint
-  const handleMint = async () => {
-    if (!active) {
-      openConnectModal();
-      return;
-    }
-    if (hasMinted) {
-      notify('You have already minted', 'error');
-      return;
-    }
-    if (isPublicSaleTime) {
-      // TODO: change to mint
-      await mint();
-      return;
-    }
-    // first check address is in allowlist, if not, call mint function, else call allowlistMint function.
-    const isAllowlist = await allowlist();
-    if (isAllowlist) {
-      await allowlistMint();
-    } else {
-      await mint();
-    }
 
-  };
-  const PublicSaleStartTime = async () => {
+  const fetchPublicSaleStartTime = async () => {
     try {
       const res = await readContract({
         ...LotteryContractConfig,
@@ -105,10 +58,8 @@ const Mint = () => {
       return 0;
     }
   };
-  const [isPublicSaleTime, setIsPublicSaleTime] = useState(false);
-  const [hasMinted, setHasMinted] = useState(false);
-  // 查询某个地址已经mint的token id，0n表示没有mint
-  const tokenIdOfMinter = async () => {
+
+  const fetchTokenIdOfMinter = async () => {
     try {
       const res = await readContract({
         ...LotteryContractConfig,
@@ -120,16 +71,89 @@ const Mint = () => {
       console.error("Error fetching tokenIdOfMinter:", error);
     }
   };
+
   useEffect(() => {
     const fetchSaleStartTime = async () => {
-      const timestamp = await PublicSaleStartTime();
+      const timestamp = await fetchPublicSaleStartTime();
       const publicSaleTime = new Date(Number(timestamp)).getTime(); // 转换为秒
       const now = parseInt(new Date().getTime() / 1000);
       setIsPublicSaleTime(publicSaleTime < now);
     };
     fetchSaleStartTime();
-    tokenIdOfMinter();
-  }, []);
+    fetchTokenIdOfMinter();
+  }, [address]);
+
+  return {
+    isPublicSaleTime,
+    hasMinted,
+    fetchAllowlistPrice,
+    fetchPublicSalePrice,
+    checkAllowlist,
+  };
+};
+
+const Mint = () => {
+  const { active, address } = useWallet();
+  const { openConnectModal } = useConnectModal();
+  const [minting, setMinting] = useState(false);
+  const { isPublicSaleTime, hasMinted, fetchAllowlistPrice, fetchPublicSalePrice, checkAllowlist } =
+    useContractData(address);
+
+  const allowlistMint = async () => {
+    setMinting(true); 
+    try {
+      const price = await fetchAllowlistPrice();
+      await writeContract("allowlistMint", {
+      ...LotteryContractConfig,
+      functionName: "allowlistMint",
+      args: [],
+      value: price,
+      });
+    } catch (error) {
+      console.error("Error allowlist minting:", error);
+    } finally {
+      setMinting(false);
+    }
+  };
+
+  const mint = async () => {
+    setMinting(true);
+    try {
+      const price = await fetchPublicSalePrice();
+      await writeContract("mint", {
+        ...LotteryContractConfig,
+        functionName: "mint",
+        args: [],
+        value: price,
+      });
+    } catch (error) {
+      console.error("Error minting:", error);
+    } finally {
+      setMinting(false);
+    }
+  };
+
+  const handleMint = async () => {
+    if (!active) {
+      openConnectModal();
+      return;
+    }
+    if (hasMinted) {
+      notify("You have already minted", "error");
+      return;
+    }
+    if (isPublicSaleTime) {
+      await mint();
+      return;
+    }
+    const isAllowlist = await checkAllowlist();
+    if (isAllowlist) {
+      await allowlistMint();
+    } else {
+      await mint();
+    }
+  };
+
   return (
     <Layout>
       <div className="flex flex-col items-center justify-center w-full h-full">
