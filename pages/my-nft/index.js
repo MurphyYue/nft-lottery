@@ -46,16 +46,16 @@ const useNFTData = (address) => {
 
   const fetchImage = useCallback(async (ipfsUri) => {
     try {
-      const ipfsGateway = "https://ipfs.io/ipfs/";
-      const ipfsHash = ipfsUri.replace("ipfs://", "");
-      const url = `${ipfsGateway}${ipfsHash}`;
-      const { data } = await axios.get(url);
-      const image = data.image.replace("ipfs://", ipfsGateway);
-      return image;
-    } catch (error) {
-      console.error("Failed to fetch image:", error);
-      return null;
-    }
+    const ipfsGateway = "https://violet-cheerful-starfish-646.mypinata.cloud/ipfs/";
+    const ipfsHash = ipfsUri.replace("ipfs://", "");
+    const url = `${ipfsHash}.json`;
+    const { data } = await axios.get(url);
+    const image = data.image.replace("ipfs://", ipfsGateway);
+    return image;
+  } catch (error) {
+    console.error("Failed to fetch image:", error);
+    return null;
+  }
   }, []);
 
   const fetchNFTByIndex = useCallback(
@@ -68,7 +68,7 @@ const useNFTData = (address) => {
         if (!tokenURI) return null;
 
         const imageUrl = await fetchImage(tokenURI);
-        if (!imageUrl) return null;
+        // if (!imageUrl) return null;
 
         return { tokenId, imageUrl };
       } catch (error) {
@@ -88,7 +88,6 @@ const useNFTData = (address) => {
         functionName: "balanceOf",
         args: [address],
       });
-
       const nftPromises = Array.from({ length: Number(balance) }, (_, i) => fetchNFTByIndex(i));
       const nftDetails = await Promise.all(nftPromises);
       setNfts(nftDetails.filter(Boolean));
@@ -110,7 +109,6 @@ const NFTDetailPage = () => {
   const { active, address } = useWallet();
   const { openConnectModal } = useConnectModal();
   const { loading, nfts } = useNFTData(address);
-
   useEffect(() => {
     if (!active) {
       openConnectModal();
@@ -130,7 +128,7 @@ const NFTDetailPage = () => {
               <div key={index} className="text-center text-xl">
                 <img
                   src={nft.imageUrl}
-                  alt={nft.tokenId}
+                  alt={nft.imageUrl ? nft.tokenId : "failed to get nft image"}
                   className="mb-4 w-full aspect-[4/3] object-cover rounded-3xl"
                 />
                 <p>Token ID: {nft.tokenId.toString()}</p>

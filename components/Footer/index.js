@@ -9,18 +9,28 @@ import styles from './index.module.scss'
 const Footer = () => {
   return (
     <div className={styles.root}>
-      <div className={styles.beta}>
+      <a
+        href="https://etherscan.io/address/0xa1d44063e25b6992893ddd3963cb589157cdba69"
+        target="_blank"
+        rel="noopener noreferrer"
+        className={styles.beta}
+      >
         <Etherscan className={styles.icon} />
         <span className="hidden sm:inline">Etherscan</span>
-      </div>
-      <div className={styles.beta}>
+      </a>
+      <a
+        href="https://x.com/EthBigStronger"
+        target="_blank"
+        rel="noopener noreferrer"
+        className={styles.beta}
+      >
         <Twitter className={styles.icon} />
         <span className="hidden sm:inline">Twitter</span>
-      </div>
-      <div className={styles.beta}>
+      </a>
+      <a className={styles.beta}>
         <Warpcaster className={styles.icon} />
         <span className="hidden sm:inline">Warpcaster</span>
-      </div>
+      </a>
     </div>
   );
 }

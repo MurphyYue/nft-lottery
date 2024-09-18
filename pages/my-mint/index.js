@@ -35,9 +35,9 @@ const fetchTokenURI = async (tokenId) => {
 
 const fetchImage = async (ipfsUri) => {
   try {
-    const ipfsGateway = "https://ipfs.io/ipfs/";
+    const ipfsGateway = "https://violet-cheerful-starfish-646.mypinata.cloud/ipfs/";
     const ipfsHash = ipfsUri.replace("ipfs://", "");
-    const url = `${ipfsGateway}${ipfsHash}`;
+    const url = `${ipfsHash}.json`;
     const { data } = await axios.get(url);
     const image = data.image.replace("ipfs://", ipfsGateway);
     return image;
@@ -118,12 +118,12 @@ const NFTDetailPage = () => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const [nft, releasableAmount, releasedAmount] = await Promise.all([
-          address && fetchNFT(address),
+        const nft = await fetchNFT(address);
+        nft && setMintedNft(nft);
+        const [releasableAmount, releasedAmount] = await Promise.all([
           address && fetchReleasable(address),
           address && fetchReleased(address),
         ]);
-        nft && setMintedNft(nft);
         setReleasable(releasableAmount);
         setReleased(releasedAmount);
       } catch (error) {
@@ -152,19 +152,19 @@ const NFTDetailPage = () => {
           <div className="flex justify-center items-center h-96">
             <Loader />
           </div>
-        ) : mintedNft?.imageUrl ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        ) : mintedNft?.imageUrl || mintedNft?.tokenId ? (
+          <div className="flex justify-center">
             <div className="text-center text-xl">
               <img
                 src={mintedNft.imageUrl}
-                alt={mintedNft.tokenId}
+                alt={mintedNft.imageUrl ? mintedNft.tokenId : "failed to get nft image"}
                 className="mb-4 w-full aspect-[4/3] object-cover rounded-3xl"
               />
               <div className="flex justify-between items-center">
-                <span className="text-slate-500">
+                <span className="text-slate-500 mr-4">
                   Releasable： <span className="text-black">{releasable}</span>
                 </span>
-                <span className="text-slate-500">
+                <span className="text-slate-500 mr-4">
                   Released： <span className="text-black">{released}</span>
                 </span>
                 <Button
