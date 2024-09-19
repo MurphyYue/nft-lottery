@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 import { LotteryContractConfig, ClaimContractConfig } from "@config/constants";
 import { readContract } from "@wagmi/core";
 import useWallet from "@wallets/useWallet";
-import { ethers, utils } from "ethers";
-import { useConnectModal } from "@rainbow-me/rainbowkit";
 import axios from "axios";
 import Layout from "Layout";
 import Footer from "@components/Footer";
@@ -35,7 +33,8 @@ const fetchTokenURI = async (tokenId) => {
 
 const fetchImage = async (ipfsUri) => {
   try {
-    const ipfsGateway = "https://violet-cheerful-starfish-646.mypinata.cloud/ipfs/";
+    const ipfsGateway =
+      "https://violet-cheerful-starfish-646.mypinata.cloud/ipfs/";
     const ipfsHash = ipfsUri.replace("ipfs://", "");
     const url = `${ipfsHash}.json`;
     const { data } = await axios.get(url);
@@ -145,6 +144,17 @@ const NFTDetailPage = () => {
     setReleasing(false);
   };
 
+  // modal open state
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // disable scroll when modal is open
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.classList.add('overflow-hidden');
+    } else {
+      document.body.classList.remove('overflow-hidden');
+    }
+  }, [isModalOpen]);
   return (
     <Layout>
       <div className="w-screen px-4 sm:px-8 lg:px-16 pt-4">
@@ -153,13 +163,28 @@ const NFTDetailPage = () => {
             <Loader />
           </div>
         ) : mintedNft?.imageUrl || mintedNft?.tokenId ? (
-          <div className="flex justify-center">
+          <div className="flex justify-center flex-col items-center">
+            <img
+              src={mintedNft.imageUrl}
+              alt={
+                mintedNft.imageUrl
+                  ? mintedNft.tokenId
+                  : "failed to get nft image"
+              }
+              className="mb-4 w-full aspect-square object-cover rounded-3xl md:w-1/2 lg:w-1/3 2xl:w-1/4 cursor-pointer"
+              onClick={() => mintedNft.imageUrl && setIsModalOpen(true)}
+            />
+            {isModalOpen && (
+              <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50">
+                <img
+                  src={mintedNft.imageUrl}
+                  alt="Full Project Image"
+                  className="max-w-full max-h-full object-contain cursor-pointer"
+                  onClick={() => setIsModalOpen(false)}
+                />
+              </div>
+            )}
             <div className="text-center text-xl">
-              <img
-                src={mintedNft.imageUrl}
-                alt={mintedNft.imageUrl ? mintedNft.tokenId : "failed to get nft image"}
-                className="mb-4 w-full aspect-square object-cover rounded-3xl"
-              />
               <div className="flex justify-between items-center">
                 <span className="text-slate-500 mr-4">
                   Releasable： <span className="text-black">{releasable}</span>

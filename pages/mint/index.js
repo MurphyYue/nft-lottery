@@ -156,9 +156,9 @@ const Mint = () => {
 
   return (
     <Layout>
-      <div className="flex flex-col items-center justify-center w-full h-full">
-        <div className="p-4 text-center text-xl ">
-          <img src={MintBg.src} className="mb-4 w-full aspect-square object-cover rounded-3xl" />
+      <div className="w-full h-full">
+        <div className="p-4 flex flex-col items-center justify-center text-xl w-full">
+          <img src={MintBg.src} className="mb-4 w-full aspect-square object-cover rounded-3xl md:w-1/2 lg:w-1/3 2xl:w-1/4" />
           <Button
             color="primary"
             size="xs"

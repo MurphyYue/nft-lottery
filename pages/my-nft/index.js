@@ -8,6 +8,7 @@ import axios from "axios";
 import Layout from "Layout";
 import Footer from "@components/Footer";
 import { Loader } from "@lidofinance/lido-ui";
+import MintBg from "@images/mint_bg.png";
 
 const useNFTData = (address) => {
   const [loading, setLoading] = useState(true);
@@ -27,7 +28,7 @@ const useNFTData = (address) => {
         return null;
       }
     },
-    [address],
+    [address]
   );
 
   const fetchTokenURI = useCallback(async (tokenId) => {
@@ -46,16 +47,17 @@ const useNFTData = (address) => {
 
   const fetchImage = useCallback(async (ipfsUri) => {
     try {
-    const ipfsGateway = "https://violet-cheerful-starfish-646.mypinata.cloud/ipfs/";
-    const ipfsHash = ipfsUri.replace("ipfs://", "");
-    const url = `${ipfsHash}.json`;
-    const { data } = await axios.get(url);
-    const image = data.image.replace("ipfs://", ipfsGateway);
-    return image;
-  } catch (error) {
-    console.error("Failed to fetch image:", error);
-    return null;
-  }
+      const ipfsGateway =
+        "https://violet-cheerful-starfish-646.mypinata.cloud/ipfs/";
+      const ipfsHash = ipfsUri.replace("ipfs://", "");
+      const url = `${ipfsHash}.json`;
+      const { data } = await axios.get(url);
+      const image = data.image.replace("ipfs://", ipfsGateway);
+      return image;
+    } catch (error) {
+      console.error("Failed to fetch image:", error);
+      return null;
+    }
   }, []);
 
   const fetchNFTByIndex = useCallback(
@@ -76,7 +78,7 @@ const useNFTData = (address) => {
         return null;
       }
     },
-    [fetchTokenOfOwnerByIndex, fetchTokenURI, fetchImage],
+    [fetchTokenOfOwnerByIndex, fetchTokenURI, fetchImage]
   );
 
   const fetchNFTDetails = useCallback(async () => {
@@ -88,7 +90,9 @@ const useNFTData = (address) => {
         functionName: "balanceOf",
         args: [address],
       });
-      const nftPromises = Array.from({ length: Number(balance) }, (_, i) => fetchNFTByIndex(i));
+      const nftPromises = Array.from({ length: Number(balance) }, (_, i) =>
+        fetchNFTByIndex(i)
+      );
       const nftDetails = await Promise.all(nftPromises);
       setNfts(nftDetails.filter(Boolean));
       setLoading(false);
@@ -114,7 +118,17 @@ const NFTDetailPage = () => {
       openConnectModal();
     }
   }, [active, openConnectModal]);
+  // modal open state
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
+  // disable scroll when modal is open
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.body.classList.remove("overflow-hidden");
+    }
+  }, [isModalOpen]);
   return (
     <Layout>
       <div className="w-screen px-4 sm:px-8 lg:px-16 pt-4">
@@ -129,9 +143,20 @@ const NFTDetailPage = () => {
                 <img
                   src={nft.imageUrl}
                   alt={nft.imageUrl ? nft.tokenId : "failed to get nft image"}
-                  className="mb-4 w-full aspect-square object-cover rounded-3xl"
+                  className="mb-4 w-full aspect-square object-cover rounded-3xl cursor-pointer"
+                  onClick={() => nft.imageUrl && setIsModalOpen(true)}
                 />
                 <p>Token ID: {nft.tokenId.toString()}</p>
+                {isModalOpen && (
+                  <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50">
+                    <img
+                      src={nft.imageUrl}
+                      alt="Full Project Image"
+                      className="max-w-full max-h-full object-contain cursor-pointer"
+                      onClick={() => setIsModalOpen(false)}
+                    />
+                  </div>
+                )}
               </div>
             ))}
           </div>
