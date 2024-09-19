@@ -129,7 +129,7 @@ const NFTDetailPage = () => {
                 <img
                   src={nft.imageUrl}
                   alt={nft.imageUrl ? nft.tokenId : "failed to get nft image"}
-                  className="mb-4 w-full aspect-[4/3] object-cover rounded-3xl"
+                  className="mb-4 w-full aspect-square object-cover rounded-3xl"
                 />
                 <p>Token ID: {nft.tokenId.toString()}</p>
               </div>

@@ -158,7 +158,7 @@ const NFTDetailPage = () => {
               <img
                 src={mintedNft.imageUrl}
                 alt={mintedNft.imageUrl ? mintedNft.tokenId : "failed to get nft image"}
-                className="mb-4 w-full aspect-[4/3] object-cover rounded-3xl"
+                className="mb-4 w-full aspect-square object-cover rounded-3xl"
               />
               <div className="flex justify-between items-center">
                 <span className="text-slate-500 mr-4">
