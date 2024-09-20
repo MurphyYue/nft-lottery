@@ -34,13 +34,14 @@ const useContractData = (address) => {
     return res;
   };
 
+  // check if address is in the white list
   const checkAllowlist = async () => {
     const res = await readContract({
       ...LotteryContractConfig,
       functionName: "allowlist",
       args: [address],
     });
-    console.log(res);
+    console.log("checkAllowlist", res);
     return res;
   };
 
@@ -148,7 +149,7 @@ const Mint = () => {
     }
     const isAllowlist = await checkAllowlist();
     if (isAllowlist) {
-      await allowlistMint();
+      await mint();
     } else {
       await mint();
     }

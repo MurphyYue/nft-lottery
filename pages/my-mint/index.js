@@ -33,8 +33,7 @@ const fetchTokenURI = async (tokenId) => {
 
 const fetchImage = async (ipfsUri) => {
   try {
-    const ipfsGateway =
-      "https://violet-cheerful-starfish-646.mypinata.cloud/ipfs/";
+    const ipfsGateway = "https://violet-cheerful-starfish-646.mypinata.cloud/ipfs/";
     const ipfsHash = ipfsUri.replace("ipfs://", "");
     const url = `${ipfsHash}.json`;
     const { data } = await axios.get(url);
@@ -61,10 +60,11 @@ const fetchNFT = async (address) => {
   }
 };
 
-const fetchReleasable = async (address) => {
+const fetchReleasable = async (address, claimContractAddress) => {
   try {
     const res = await readContract({
       ...ClaimContractConfig,
+      address: claimContractAddress,
       functionName: "releasable",
       args: [address],
     });
@@ -75,10 +75,11 @@ const fetchReleasable = async (address) => {
   }
 };
 
-const fetchReleased = async (address) => {
+const fetchReleased = async (address, claimContractAddress) => {
   try {
     const res = await readContract({
       ...ClaimContractConfig,
+      address: claimContractAddress,
       functionName: "released",
       args: [address],
     });
@@ -90,10 +91,11 @@ const fetchReleased = async (address) => {
   }
 };
 
-const fetchRelease = async (address) => {
+const fetchRelease = async (address, claimContractAddress) => {
   try {
     await readContract({
       ...ClaimContractConfig,
+      address: claimContractAddress,
       functionName: "release",
       args: [address],
     });
@@ -105,6 +107,40 @@ const fetchRelease = async (address) => {
   }
 };
 
+const fetchPaymentSplittersOfMinter = async (address) => {
+  try {
+    const addresses = await readContract({
+      ...LotteryContractConfig,
+      functionName: "paymentSplittersOfMinter",
+      args: [address],
+    });
+    // return address for ClaimContract's address
+    console.log("addresses", addresses);
+    return addresses;
+  } catch (error) {
+    notify("You have no shares", "error");
+    console.error("Error releasing royalties:", error);
+    return false;
+  }
+};
+
+// determine whether the current address's user is an minter.
+const minterValidate = async (address) => {
+  try {
+    const res = await readContract({
+      ...LotteryContractConfig,
+      functionName: "haveMinted",
+      args: [address],
+    });
+    console.log("minter", res);
+    return res;
+  } catch (error) {
+    notify("You are not minter", "error");
+    console.error("Error haveMinted:", error);
+    return false;
+  }
+}
+
 const NFTDetailPage = () => {
   const { active, address } = useWallet();
   const [loading, setLoading] = useState(true);
@@ -112,19 +148,28 @@ const NFTDetailPage = () => {
   const [releasable, setReleasable] = useState(0);
   const [released, setReleased] = useState(0);
   const [releasing, setReleasing] = useState(false);
+  const [claimContractAddress, setClaimContractAddress] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const nft = await fetchNFT(address);
-        nft && setMintedNft(nft);
-        const [releasableAmount, releasedAmount] = await Promise.all([
-          address && fetchReleasable(address),
-          address && fetchReleased(address),
-        ]);
-        setReleasable(releasableAmount);
-        setReleased(releasedAmount);
+        const isMinter = await minterValidate(address);
+        if (isMinter) {
+          const nft = await fetchNFT(address);
+          nft && setMintedNft(nft);
+          const claimAddress = await fetchPaymentSplittersOfMinter(address);
+          console.log("claimAddress", claimAddress);
+          setClaimContractAddress(claimAddress);
+          const [releasableAmount, releasedAmount] = await Promise.all([
+            address && fetchReleasable(address, claimAddress),
+            address && fetchReleased(address, claimAddress),
+          ]);
+          setReleasable(releasableAmount);
+          setReleased(releasedAmount);
+        } else {
+          notify("You are not minter", "error");
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -136,7 +181,7 @@ const NFTDetailPage = () => {
 
   const handleRelease = async () => {
     setReleasing(true);
-    const success = await fetchRelease(address);
+    const success = await fetchRelease(address, claimContractAddress);
     if (success) {
       setReleased((prev) => prev + releasable);
       setReleasable(0);
@@ -150,9 +195,9 @@ const NFTDetailPage = () => {
   // disable scroll when modal is open
   useEffect(() => {
     if (isModalOpen) {
-      document.body.classList.add('overflow-hidden');
+      document.body.classList.add("overflow-hidden");
     } else {
-      document.body.classList.remove('overflow-hidden');
+      document.body.classList.remove("overflow-hidden");
     }
   }, [isModalOpen]);
   return (
@@ -166,11 +211,7 @@ const NFTDetailPage = () => {
           <div className="flex justify-center flex-col items-center">
             <img
               src={mintedNft.imageUrl}
-              alt={
-                mintedNft.imageUrl
-                  ? mintedNft.tokenId
-                  : "failed to get nft image"
-              }
+              alt={mintedNft.imageUrl ? mintedNft.tokenId : "failed to get nft image"}
               className="mb-4 w-full aspect-square object-cover rounded-3xl md:w-1/2 lg:w-1/3 2xl:w-1/4 cursor-pointer"
               onClick={() => mintedNft.imageUrl && setIsModalOpen(true)}
             />
