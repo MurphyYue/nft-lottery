@@ -50,7 +50,7 @@ const useNFTData = (address) => {
       const ipfsGateway =
         "https://violet-cheerful-starfish-646.mypinata.cloud/ipfs/";
       const ipfsHash = ipfsUri.replace("ipfs://", "");
-      const url = `${ipfsHash}.json`;
+      const url = `${ipfsHash}`;
       const { data } = await axios.get(url);
       const image = data.image.replace("ipfs://", ipfsGateway);
       return image;

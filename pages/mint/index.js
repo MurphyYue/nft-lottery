@@ -144,12 +144,12 @@ const Mint = () => {
       return;
     }
     if (isPublicSaleTime) {
-      await mint();
+      await allowlistMint();
       return;
     }
     const isAllowlist = await checkAllowlist();
     if (isAllowlist) {
-      await mint();
+      await allowlistMint();
     } else {
       await mint();
     }
