@@ -68,6 +68,7 @@ const fetchReleasable = async (address, claimContractAddress) => {
       functionName: "releasable",
       args: [address],
     });
+    console.log("fetchReleasable", res);
     return Number(res);
   } catch (error) {
     console.error("Error fetching releasable royalties:", error);
@@ -83,6 +84,7 @@ const fetchReleased = async (address, claimContractAddress) => {
       functionName: "released",
       args: [address],
     });
+    console.log("fetchReleased", res);
     return Number(res);
   } catch (error) {
     notify("Failed to fetch released royalties", "error");
@@ -115,8 +117,8 @@ const fetchPaymentSplittersOfMinter = async (address) => {
       args: [address],
     });
     // return address for ClaimContract's address
-    console.log("addresses", addresses);
-    return addresses;
+    console.log("addresses", addresses[0]);
+    return addresses[0] || null;
   } catch (error) {
     notify("You have no shares", "error");
     console.error("Error releasing royalties:", error);
@@ -159,14 +161,15 @@ const NFTDetailPage = () => {
           const nft = await fetchNFT(address);
           nft && setMintedNft(nft);
           const claimAddress = await fetchPaymentSplittersOfMinter(address);
-          console.log("claimAddress", claimAddress);
-          setClaimContractAddress(claimAddress);
-          const [releasableAmount, releasedAmount] = await Promise.all([
-            address && fetchReleasable(address, claimAddress),
-            address && fetchReleased(address, claimAddress),
-          ]);
-          setReleasable(releasableAmount);
-          setReleased(releasedAmount);
+          if (claimAddress) {
+            setClaimContractAddress(claimAddress);
+            const [releasableAmount, releasedAmount] = await Promise.all([
+              address && fetchReleasable(address, claimAddress),
+              address && fetchReleased(address, claimAddress),
+            ]);
+            setReleasable(releasableAmount);
+            setReleased(releasedAmount);
+          }
         } else {
           notify("You are not minter", "error");
         }
