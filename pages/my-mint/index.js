@@ -108,7 +108,10 @@ const fetchRelease = async (address, claimContractAddress) => {
     console.log("relese", res)
     return true;
   } catch (error) {
-    notify("release error", "error");
+    notify(
+      "The total cost exceeds the balance of the account.",
+      "error",
+    );
     console.error("Error releasing royalties:", error);
     return false;
   }
@@ -141,7 +144,7 @@ const minterValidate = async (address) => {
     console.log("minter", res);
     return res;
   } catch (error) {
-    notify("You are not minter", "error");
+    // notify("You are not minter", "error");
     console.error("Error haveMinted:", error);
     return false;
   }
@@ -175,7 +178,7 @@ const NFTDetailPage = () => {
             setReleased(releasedAmount);
           }
         } else {
-          notify("You are not minter", "error");
+          // notify("You are not minter", "error");
         }
       } catch (error) {
         console.error("Error fetching data:", error);
