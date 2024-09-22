@@ -1,6 +1,6 @@
 import Layout from "Layout";
 import { useState, useEffect } from "react";
-import MintBg from "@images/mint_bg.png";
+import MintBg from "@images/mint_bg.gif";
 import { LotteryContractConfig } from "@config/constants";
 import { readContract } from "@wagmi/core";
 import { writeContract } from "@hooks/operateContract";

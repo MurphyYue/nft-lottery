@@ -8,7 +8,6 @@ import axios from "axios";
 import Layout from "Layout";
 import Footer from "@components/Footer";
 import { Loader } from "@lidofinance/lido-ui";
-import MintBg from "@images/mint_bg.png";
 
 const useNFTData = (address) => {
   const [loading, setLoading] = useState(true);
