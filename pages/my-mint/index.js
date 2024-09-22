@@ -70,7 +70,6 @@ const fetchReleasable = async (address, claimContractAddress) => {
       args: [address],
     });
     const releasable = ethers.utils.formatUnits(res, 18);
-    console.log("fetchReleasable", releasable);
     return releasable;
   } catch (error) {
     console.error("Error fetching releasable royalties:", error);
@@ -98,12 +97,13 @@ const fetchReleased = async (address, claimContractAddress) => {
 
 const fetchRelease = async (address, claimContractAddress) => {
   try {
-    await readContract({
+    const res = await readContract({
       ...ClaimContractConfig,
       address: claimContractAddress,
       functionName: "release",
       args: [address],
     });
+    console.log("relese", res)
     return true;
   } catch (error) {
     notify("You have no shares", "error");
@@ -120,7 +120,6 @@ const fetchPaymentSplittersOfMinter = async (address) => {
       args: [address],
     });
     // return address for ClaimContract's address
-    console.log("addresses", addresses[0]);
     return addresses[0] || null;
   } catch (error) {
     notify("You have no shares", "error");
@@ -189,8 +188,12 @@ const NFTDetailPage = () => {
     setReleasing(true);
     const success = await fetchRelease(address, claimContractAddress);
     if (success) {
-      setReleased((prev) => prev + releasable);
-      setReleasable(0);
+      const [releasableAmount, releasedAmount] = await Promise.all([
+        address && fetchReleasable(address, claimContractAddress),
+        address && fetchReleased(address, claimContractAddress),
+      ]);
+      setReleasable(releasableAmount);
+      setReleased(releasedAmount);
     }
     setReleasing(false);
   };
