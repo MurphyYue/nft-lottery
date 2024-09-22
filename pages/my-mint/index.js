@@ -107,7 +107,7 @@ const fetchRelease = async (address, claimContractAddress) => {
     console.log("relese", res)
     return true;
   } catch (error) {
-    notify("You have no shares", "error");
+    notify("release error", "error");
     console.error("Error releasing royalties:", error);
     return false;
   }
@@ -123,7 +123,7 @@ const fetchPaymentSplittersOfMinter = async (address) => {
     // return address for ClaimContract's address
     return addresses[0] || null;
   } catch (error) {
-    notify("You have no shares", "error");
+    notify("get mint address error", "error");
     console.error("Error releasing royalties:", error);
     return false;
   }
@@ -249,7 +249,7 @@ const NFTDetailPage = () => {
                   themeoverride="light"
                   variant="filled"
                   onClick={handleRelease}
-                  disabled={releasable === 0}
+                  disabled={releasable == 0}
                   loading={releasing}
                 >
                   Release
