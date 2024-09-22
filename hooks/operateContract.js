@@ -66,6 +66,7 @@ export async function writeContract(operate, param) {
   try {
     const gasPrice = await getGasPrice(); // 获取当前的 gasPrice
     console.log('gasPrice', gasPrice);
+    console.log("param", param);
     const hashData = await writeContractWagmi({ ...param, gasPrice }); // 设置 gasPrice
     dispatch(setSubmitModalParam({ type: _operate, state: 'submitted', hash: hashData.hash }));
     console.log('hashData', hashData);

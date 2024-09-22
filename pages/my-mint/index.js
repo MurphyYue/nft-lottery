@@ -103,6 +103,7 @@ const fetchRelease = async (address, claimContractAddress) => {
       address: claimContractAddress,
       functionName: "release",
       args: [address],
+      gasLimit: 100000,
     });
     console.log("relese", res)
     return true;
