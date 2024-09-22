@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { LotteryContractConfig, ClaimContractConfig } from "@config/constants";
 import { readContract } from "@wagmi/core";
+import { writeContract } from "@hooks/operateContract";
 import useWallet from "@wallets/useWallet";
 import axios from "axios";
 import Layout from "Layout";
@@ -97,7 +98,7 @@ const fetchReleased = async (address, claimContractAddress) => {
 
 const fetchRelease = async (address, claimContractAddress) => {
   try {
-    const res = await readContract({
+    const res = await writeContract("release", {
       ...ClaimContractConfig,
       address: claimContractAddress,
       functionName: "release",
