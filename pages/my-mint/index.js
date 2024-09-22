@@ -7,6 +7,7 @@ import Layout from "Layout";
 import Footer from "@components/Footer";
 import { Loader, Button } from "@lidofinance/lido-ui";
 import { notify } from "@utils/msgNotify";
+import { ethers } from "ethers";
 
 const fetchTokenIdOfMinter = async (address) => {
   try {
@@ -68,8 +69,9 @@ const fetchReleasable = async (address, claimContractAddress) => {
       functionName: "releasable",
       args: [address],
     });
-    console.log("fetchReleasable", res);
-    return Number(res);
+    const releasable = ethers.utils.formatUnits(res, 18);
+    console.log("fetchReleasable", releasable);
+    return releasable;
   } catch (error) {
     console.error("Error fetching releasable royalties:", error);
     return 0;
@@ -84,8 +86,9 @@ const fetchReleased = async (address, claimContractAddress) => {
       functionName: "released",
       args: [address],
     });
-    console.log("fetchReleased", res);
-    return Number(res);
+    const released = ethers.utils.formatUnits(res, 18);
+    console.log("fetchReleased", released);
+    return released;
   } catch (error) {
     notify("Failed to fetch released royalties", "error");
     console.error("Error fetching released royalties:", error);
