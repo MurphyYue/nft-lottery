@@ -108,10 +108,7 @@ const fetchRelease = async (address, claimContractAddress) => {
     console.log("relese", res)
     return true;
   } catch (error) {
-    notify(
-      "The total cost exceeds the balance of the account.",
-      "error",
-    );
+    notify(error, "error");
     console.error("Error releasing royalties:", error);
     return false;
   }
@@ -253,7 +250,7 @@ const NFTDetailPage = () => {
                   themeoverride="light"
                   variant="filled"
                   onClick={handleRelease}
-                  disabled={releasable == 0}
+                  disabled={releasable === 0}
                   loading={releasing}
                 >
                   Release

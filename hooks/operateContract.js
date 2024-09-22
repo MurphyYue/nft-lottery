@@ -5,7 +5,7 @@ import { hashNotify } from "@utils/msgNotify";
 import { sendTransaction as sendTransactionWagmi, writeContract as writeContractWagmi, waitForTransaction } from '@wagmi/core';
 import { capitalize } from "lodash";
 import { ethers } from "ethers";
-import { parseGwei } from 'viem'
+import { parseGwei, InsufficientFundsError } from "viem";
 
 export function toHex(str) {
   let result = '';
@@ -75,7 +75,11 @@ export async function writeContract(operate, param) {
     hashNotify(hashData.hash, receipt.status ? 'success' : 'failed');
     console.log('receipt', receipt);
   } catch (err) {
-    console.log('error', err);
+    // console.log('error', err);
+    const isInsufficientFundsError = err.walk((e) => e instanceof InsufficientFundsError);
+    if (isInsufficientFundsError) {
+      return Promise.reject('insufficient funds');
+    }
     if (err?.cause?.code === 4001) {
       dispatch(setSubmitModalParam({ open: false }));
     } else {
