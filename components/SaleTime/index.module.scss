@@ -2,6 +2,10 @@
   width: 100%;
   display: flex;
   justify-content: center;
+  align-items: center;
+  @media screen and (max-width: 640px) {
+    display: block;
+  }
   padding: 24px 0;
   .item {
     display: flex;

@@ -75,29 +75,30 @@ const SaleTime = () => {
   }, [saleStartTime]);
   return (
     <div className={styles.root}>
-      {/* {countdown.started ? "Public sale has started!" : ""} */}
-      {/* <p className="text-2xl font-semibold text-blue-500 mb-4">公售时间为：{saleStartTime.toLocaleString()}</p> */}
       {countdown.started ? (
         <div className={styles.item}>
           <div className={styles.itemNum}>Public sale has started!</div>
         </div>
       ) : (
         <Fragment>
-          <div className={styles.item}>
-            <div className={styles.itemNum}>{countdown.days}</div>
-            <span className={styles.itemTxt}>D</span>
-          </div>
-          <div className={styles.item}>
-            <div className={styles.itemNum}>{countdown.hours}</div>
-            <span className={styles.itemTxt}>H</span>
-          </div>
-          <div className={styles.item}>
-            <div className={styles.itemNum}>{countdown.minutes}</div>
-            <span className={styles.itemTxt}>M</span>
-          </div>
-          <div className={styles.item}>
-            <div className={styles.itemNum}>{countdown.seconds}</div>
-            <span className={styles.itemTxt}>S</span>
+          <div className="flex justify-center text-base sm:text-xl sm:mr-2">Countdown to public sale:</div>
+          <div className="flex justify-center">
+            <div className={styles.item}>
+              <div className={styles.itemNum}>{countdown.days}</div>
+              <span className={styles.itemTxt}>D</span>
+            </div>
+            <div className={styles.item}>
+              <div className={styles.itemNum}>{countdown.hours}</div>
+              <span className={styles.itemTxt}>H</span>
+            </div>
+            <div className={styles.item}>
+              <div className={styles.itemNum}>{countdown.minutes}</div>
+              <span className={styles.itemTxt}>M</span>
+            </div>
+            <div className={styles.item}>
+              <div className={styles.itemNum}>{countdown.seconds}</div>
+              <span className={styles.itemTxt}>S</span>
+            </div>
           </div>
         </Fragment>
       )}
