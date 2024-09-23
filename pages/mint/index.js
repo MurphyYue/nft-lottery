@@ -111,6 +111,7 @@ const Mint = () => {
       value: price,
       });
     } catch (error) {
+      notify(error, 'error');
       console.error("Error allowlist minting:", error);
     } finally {
       setMinting(false);

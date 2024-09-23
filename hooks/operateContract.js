@@ -78,7 +78,7 @@ export async function writeContract(operate, param) {
     // console.log('error', err);
     const isInsufficientFundsError = err.walk((e) => e instanceof InsufficientFundsError);
     if (isInsufficientFundsError) {
-      return Promise.reject('insufficient funds');
+      return Promise.reject('Insufficient funds');
     }
     if (err?.cause?.code === 4001) {
       dispatch(setSubmitModalParam({ open: false }));
