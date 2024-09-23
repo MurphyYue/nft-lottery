@@ -3,7 +3,9 @@ import React from "react";
 import Etherscan from '@icons/Etherscan.svg';
 import Twitter from '@icons/Twitter.svg';
 import Warpcaster from '@icons/Warpcaster.svg';
+import MagicEden from "@icons/magicEdn.svg";
 import styles from './index.module.scss'
+import { LotteryContractConfig } from "@config/constants";
 
 
 const Footer = () => {
@@ -30,6 +32,15 @@ const Footer = () => {
       <a className={styles.beta}>
         <Warpcaster className={styles.icon} />
         <span className="hidden sm:inline">Warpcaster</span>
+      </a>
+      <a
+        href={`https://magiceden.io/collections/polygon/${LotteryContractConfig.address}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={styles.beta}
+      >
+        <MagicEden className={styles.icon} />
+        <span className="hidden sm:inline">MagicEden</span>
       </a>
     </div>
   );

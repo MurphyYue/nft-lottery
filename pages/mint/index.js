@@ -129,6 +129,7 @@ const Mint = () => {
         value: price,
       });
     } catch (error) {
+      notify(error, "error")
       console.error("Error minting:", error);
     } finally {
       setMinting(false);

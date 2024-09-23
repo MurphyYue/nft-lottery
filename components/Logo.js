@@ -81,7 +81,7 @@ export default function Logo() {
   return (
     <div className={classes.root} onClick={jumpToIntroduce}>
       <img className={classes.logo} src={LogoIcon.src} />
-      <div className={classes.title}>Eth-er Biger Stronger</div>
+      <div className={classes.title}>VGod Not VDog</div>
     </div>
   );
 }
