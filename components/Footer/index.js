@@ -11,7 +11,7 @@ import { LotteryContractConfig } from "@config/constants";
 const Footer = () => {
   return (
     <div className={styles.root}>
-      <a
+      {/* <a
         href="https://etherscan.io/address/0xa1d44063e25b6992893ddd3963cb589157cdba69"
         target="_blank"
         rel="noopener noreferrer"
@@ -28,12 +28,12 @@ const Footer = () => {
       >
         <Twitter className={styles.icon} />
         <span className="hidden sm:inline">Twitter</span>
-      </a>
+      </a> */}
       <a className={styles.beta}>
         <Warpcaster className={styles.icon} />
         <span className="hidden sm:inline">Warpcaster</span>
       </a>
-      <a
+      {/* <a
         href={`https://magiceden.io/collections/polygon/${LotteryContractConfig.address}`}
         target="_blank"
         rel="noopener noreferrer"
@@ -41,7 +41,7 @@ const Footer = () => {
       >
         <MagicEden className={styles.icon} />
         <span className="hidden sm:inline">MagicEden</span>
-      </a>
+      </a> */}
     </div>
   );
 }
