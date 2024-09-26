@@ -77,7 +77,8 @@ const SaleTime = () => {
     <div className={styles.root}>
       {countdown.started ? (
         <div className={styles.item}>
-          <div className={styles.itemNum}>Public sale has started!</div>
+          {/* <div className={styles.itemNum}>Public sale has started!</div> */}
+          <div className={styles.itemNum}>Stay tuned!</div>
         </div>
       ) : (
         <Fragment>

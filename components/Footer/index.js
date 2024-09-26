@@ -19,7 +19,7 @@ const Footer = () => {
       >
         <Etherscan className={styles.icon} />
         <span className="hidden sm:inline">Etherscan</span>
-      </a>
+      </a> */}
       <a
         href="https://x.com/EthBigStronger"
         target="_blank"
@@ -28,11 +28,11 @@ const Footer = () => {
       >
         <Twitter className={styles.icon} />
         <span className="hidden sm:inline">Twitter</span>
-      </a> */}
-      <a className={styles.beta}>
+      </a>
+      {/* <a className={styles.beta}>
         <Warpcaster className={styles.icon} />
         <span className="hidden sm:inline">Warpcaster</span>
-      </a>
+      </a> */}
       {/* <a
         href={`https://magiceden.io/collections/polygon/${LotteryContractConfig.address}`}
         target="_blank"
