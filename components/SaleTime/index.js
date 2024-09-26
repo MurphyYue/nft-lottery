@@ -78,11 +78,13 @@ const SaleTime = () => {
       {countdown.started ? (
         <div className={styles.item}>
           {/* <div className={styles.itemNum}>Public sale has started!</div> */}
-          <div className={styles.itemNum}>Stay tuned!</div>
+          <div className={styles.itemNum}>Mint coming soon!</div>
         </div>
       ) : (
         <Fragment>
-          <div className="flex justify-center text-base sm:text-xl sm:mr-2">Countdown to public sale:</div>
+          <div className="flex justify-center text-base sm:text-xl sm:mr-2">
+            Countdown to public sale:
+          </div>
           <div className="flex justify-center">
             <div className={styles.item}>
               <div className={styles.itemNum}>{countdown.days}</div>

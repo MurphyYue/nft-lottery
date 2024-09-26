@@ -13,11 +13,14 @@ const Home = () => {
         <div>
           <div className="flex flex-col md:flex-row md:even:flex-row-reverse">
             <div className="w-full md:max-w-[30%]">
-              <h3 className="text-2xl md:text-4xl font-semibold text-center md:text-left md:mt-12">
+              <h3 className="text-2xl md:text-6xl font-semibold text-center md:text-left md:mt-12">
                 Consensuss
               </h3>
-              <p className="text-base md:text-2xl md:ml-8 md:mt-10 mb-2 leading-relaxed text-gray-700 text-center md:text-left">
-                Biger Stronger
+              <p className="text-base md:text-4xl md:ml-8 md:mt-10 mb-2 leading-relaxed text-gray-700 text-center md:text-left">
+                Biger!
+              </p>
+              <p className="text-base md:text-4xl md:ml-16 md:mt-10 mb-2 leading-relaxed text-gray-700 text-center md:text-left">
+                Stronger!
               </p>
             </div>
             <div className="rounded-3xl w-full mb-4 sm:mb-10 overflow-hidden relative">
@@ -31,8 +34,9 @@ const Home = () => {
               </h3>
               <p className="text-base md:text-2xl md:ml-8 md:mt-10 mb-2 leading-relaxed text-gray-700 text-left">
                 ERC721-C: Each minter gets a 3% royalty on the transaction.
-                <br />
-                Airdrop Meme tokens to creators, miners, traders
+              </p>
+              <p className="text-base md:text-2xl md:ml-8 md:mt-10 mb-2 leading-relaxed text-gray-700 text-left">
+                Airdrop Meme tokens to creators, miners, traders.
               </p>
             </div>
             <div className="rounded-3xl w-full mb-4 sm:mb-10 overflow-hidden relative">
@@ -45,7 +49,7 @@ const Home = () => {
                 Meme
               </h3>
               <p className="text-base md:text-2xl md:ml-8 md:mt-10 mb-2 leading-relaxed text-gray-700 text-left">
-                Create the meme token with the strongest consensus and the largest market cap
+                Create the meme token with the strongest consensus and the largest market cap.
               </p>
             </div>
             <div className="rounded-3xl w-full mb-4 sm:mb-10 overflow-hidden relative">
@@ -58,7 +62,7 @@ const Home = () => {
                 Meme
               </h3> */}
               <p className="text-base md:text-2xl md:ml-8 md:mt-10 mb-2 leading-relaxed text-gray-700 text-left">
-              Together for the construction of Ethereum ecological construction to do more...
+                Together for the construction of Ethereum ecological construction to do more...
               </p>
             </div>
             <div className="rounded-3xl w-full mb-4 sm:mb-10 overflow-hidden relative">
