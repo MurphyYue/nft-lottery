@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   logo: {
     width: "32px",
     height: "30px",
-    marginRight: "8px",
+    marginRight: "18px",
     flexShrink: 0,
   },
   title: {

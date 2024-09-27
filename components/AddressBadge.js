@@ -27,9 +27,9 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   light: {
-    background: '#F4F6F8',
+    background: '#F7F7F7',
     '&& p': {
-      color: '#5D6B7B',
+      color: '#151515',
     },
   },
 }));
@@ -42,8 +42,8 @@ export default function AddressBadge({ address, mode }) {
   }, [])
 
   return (
-    <div className={`${classes.root} ${classes[mode || "dark"]}`} onClick={openAccountInfo}>
-      {!isMobile && <p>{addressShortened(address, 4, 4)}</p>}
+    <div className={`${classes.root} ${classes["light"]}`} onClick={openAccountInfo}>
+      <p className='hidden md:inline'>{addressShortened(address, 4, 4)}</p>
       <Jazzicon diameter={32} seed={jsNumberForAddress(address)} />
     </div>
   );
