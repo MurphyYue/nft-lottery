@@ -15,7 +15,7 @@ function ImageWithLoading({ src, alt }) {
   return (
     <div className="absolute inset-0 w-full h-full">
       {isLoading? (
-        <Loader />
+        <div className='w-full h-full flex justify-center items-center bg-slate-300'><Loader /></div>
       ) : (
         <img src={src} alt={alt} className=" w-full h-full object-cover" />
       )}
