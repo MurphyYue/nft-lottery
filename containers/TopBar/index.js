@@ -35,9 +35,8 @@ function TopBar({ type, backPath, children }) {
         )}
         <Tabs tabs={tabList} />
         <div className={styles.rightTop}>{active ? <Badge address={address} /> : <Button />}</div>
+        <AccountInfo wallet={wallet} />
       </div>
-      {children}
-      <AccountInfo wallet={wallet} />
     </div>
   );
 }

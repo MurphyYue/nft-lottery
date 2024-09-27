@@ -18,6 +18,11 @@ const tabs = [
   //   path: "/my-mint",
   //   needLogin: true,
   // },
+  {
+    name: "Preview",
+    path: "/preview",
+    needLogin: false,
+  },
 ];
 
 export default tabs

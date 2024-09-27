@@ -21,7 +21,7 @@ const Footer = () => {
         <span className="hidden sm:inline">Etherscan</span>
       </a> */}
       <a
-        href="https://x.com/EthBigStronger"
+        href="https://x.com/vgod_not_vdog"
         target="_blank"
         rel="noopener noreferrer"
         className={styles.beta}
