@@ -7,7 +7,7 @@ import Footer from "@components/Footer";
 
 const Home = () => {
   return (
-    <div className="min-h-screen px-4 sm:px-8 lg:px-16">
+    <div className="px-4 sm:px-8 lg:px-16 overflow-y-auto" style={{height: 'calc(100vh - 152px)'}}>
       <main>
         <SaleTime />
         <div>
@@ -74,7 +74,6 @@ const Home = () => {
           </div>
         </div>
       </main>
-      <Footer />
     </div>
   );
 };
