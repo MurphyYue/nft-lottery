@@ -1,6 +1,7 @@
 import { makeStyles } from '@material-ui/core';
 import { Address, Identicon } from '@lidofinance/lido-ui';
 import { addressShortened } from '@utils/index';
+import AddressIcon from './AddressIcon';
 
 const useStyles = makeStyles({
   root: {
@@ -22,7 +23,8 @@ export default function AddressBadgeAlt({ address, mode }) {
 
   return (
     <div className={classes.root}>
-      <Identicon address={address ?? ''} />
+      {/* <Identicon address={address ?? ''} /> */}
+      <AddressIcon address={address} />
       <Address address={addressShortened(address) ?? ''} symbols={6} className={classes.address} />
     </div>
   );

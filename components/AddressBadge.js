@@ -4,7 +4,7 @@ import { setAccountModalOpen } from '@store/ui';
 import { useCallback } from 'react';
 import Jazzicon, { jsNumberForAddress } from 'react-jazzicon';
 import { addressShortened } from '@utils/index';
-import { isMobile } from "react-device-detect";
+import AddressIcon from './AddressIcon';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -44,7 +44,8 @@ export default function AddressBadge({ address, mode }) {
   return (
     <div className={`${classes.root} ${classes["light"]}`} onClick={openAccountInfo}>
       <p className='hidden md:inline'>{addressShortened(address, 4, 4)}</p>
-      <Jazzicon diameter={32} seed={jsNumberForAddress(address)} />
+      {/* <Jazzicon diameter={32} seed={jsNumberForAddress(address)} /> */}
+      <AddressIcon address={address} />
     </div>
   );
 }
