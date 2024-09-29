@@ -2,8 +2,7 @@ import SaleTime from "@components/SaleTime";
 import HomeBg1 from "@images/ether_1.jpg";
 import HomeBg2 from "@images/ether_2.jpg";
 import HomeBg3 from "@images/ether_3.jpg";
-import HomeBg4 from "@images/ether_4.jpg";
-import Footer from "@components/Footer";
+import HomeBg4 from "@images/ether_4.png";
 
 const Home = () => {
   return (
