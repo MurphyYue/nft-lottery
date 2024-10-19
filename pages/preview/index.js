@@ -6,18 +6,19 @@ import Footer from "@components/Footer";
 const ImageGrid = () => {
   const [images, setImages] = useState([]);
   const [page, setPage] = useState(1);
-  const totalImages = 72; // Total number of images
+  const totalImages = 56; // Total number of images
   const [loading, setLoading] = useState(false);
   const containerRef = useRef(null);
-
+  const IMAGE_BASE_URL =
+    "https://violet-cheerful-starfish-646.mypinata.cloud/ipfs/QmWPsP1pYDQtGJD7CBYWLeF23efsdSFVMWqUqLwhRg6DoG/image_";
   const loadImages = (page) => {
     // Simulate fetching images from an API
     const step = 12;
-    const newImages = Array.from({ length: step }, (_, i) => ({
+    const remainingImages = totalImages - images.length;
+    const newImagesLength = Math.min(step, remainingImages);
+    const newImages = Array.from({ length: newImagesLength }, (_, i) => ({
       id: (page - 1) * step + i,
-      url: `https://violet-cheerful-starfish-646.mypinata.cloud/ipfs/QmcdAvynf5Sb8CUDDwL1ufc4W7dU32eEWozc94qrFwTNra/${
-        (page - 1) * step + i + 1
-      }.png`,
+      url: `${IMAGE_BASE_URL}${(page - 1) * step + i + 1}.png`,
     }));
     setImages((prevImages) => [...prevImages, ...newImages]);
     setLoading(false); // Set loading to false after images are loaded
