@@ -152,7 +152,6 @@ const Mint = () => {
   };
 
   const handleMint = async (inviterAddress) => {
-    console.log("handleMint", inviterAddress);
     if (!active) {
       openConnectModal();
       return;
@@ -181,7 +180,7 @@ const Mint = () => {
             src={MintBg.src}
             className="mb-4 w-full aspect-square object-cover rounded-3xl md:w-1/2 lg:w-1/3 2xl:w-1/4"
           />
-          <Button
+          {/* <Button
             color="primary"
             size="xs"
             themeoverride="light"
@@ -191,7 +190,7 @@ const Mint = () => {
             loading={minting}
           >
             Mint
-          </Button>
+          </Button> */}
           Mint coming soon !
         </div>
         <div className="fixed bottom-0 w-full left-0">
