@@ -10,6 +10,7 @@ import { utils } from "ethers";
 import Footer from "@components/Footer";
 import { notify } from "@utils/msgNotify";
 import { Button } from "@lidofinance/lido-ui";
+import MintModal from "./MintModal";
 
 const useContractData = (address) => {
   const [isPublicSaleTime, setIsPublicSaleTime] = useState(false);
@@ -97,46 +98,61 @@ const Mint = () => {
   const { active, address } = useWallet();
   const { openConnectModal } = useConnectModal();
   const [minting, setMinting] = useState(false);
-  const { isPublicSaleTime, hasMinted, fetchAllowlistPrice, fetchPublicSalePrice, checkAllowlist } =
-    useContractData(address);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const {
+    isPublicSaleTime,
+    hasMinted,
+    fetchAllowlistPrice,
+    fetchPublicSalePrice,
+    checkAllowlist,
+  } = useContractData(address);
 
-  const allowlistMint = async () => {
-    setMinting(true); 
+  const allowlistMint = async (address) => {
+    setMinting(true);
     try {
       const price = await fetchAllowlistPrice();
       await writeContract("allowlistMint", {
-      ...LotteryContractConfig,
-      functionName: "allowlistMint",
-      args: [],
-      value: price,
+        ...LotteryContractConfig,
+        functionName: "allowlistMint",
+        args: [address],
+        value: price,
       });
     } catch (error) {
-      notify(error, 'error');
+      notify(error, "error");
       console.error("Error allowlist minting:", error);
     } finally {
       setMinting(false);
     }
   };
 
-  const mint = async () => {
+  const mint = async (address) => {
     setMinting(true);
     try {
       const price = await fetchPublicSalePrice();
       await writeContract("mint", {
         ...LotteryContractConfig,
         functionName: "mint",
-        args: [],
+        args: [address],
         value: price,
       });
     } catch (error) {
-      notify(error, "error")
+      notify(error, "error");
       console.error("Error minting:", error);
     } finally {
       setMinting(false);
     }
   };
+  const manageMint = () => {
+    if (!active) {
+      openConnectModal();
+      return;
+    }
+    // show mint modal
+    setIsModalOpen(true);
+  };
 
-  const handleMint = async () => {
+  const handleMint = async (inviterAddress) => {
+    console.log("handleMint", inviterAddress);
     if (!active) {
       openConnectModal();
       return;
@@ -146,14 +162,14 @@ const Mint = () => {
       return;
     }
     if (isPublicSaleTime) {
-      await allowlistMint();
+      await allowlistMint(inviterAddress);
       return;
     }
     const isAllowlist = await checkAllowlist();
     if (isAllowlist) {
-      await allowlistMint();
+      await allowlistMint(inviterAddress);
     } else {
-      await mint();
+      await mint(inviterAddress);
     }
   };
 
@@ -161,24 +177,32 @@ const Mint = () => {
     <Layout>
       <div className="w-full h-full">
         <div className="p-4 flex flex-col items-center justify-center text-xl w-full">
-          <img src={MintBg.src} className="mb-4 w-full aspect-square object-cover rounded-3xl md:w-1/2 lg:w-1/3 2xl:w-1/4" />
-          {/* <Button
+          <img
+            src={MintBg.src}
+            className="mb-4 w-full aspect-square object-cover rounded-3xl md:w-1/2 lg:w-1/3 2xl:w-1/4"
+          />
+          <Button
             color="primary"
             size="xs"
             themeoverride="light"
             variant="filled"
-            onClick={handleMint}
+            onClick={manageMint}
             disabled={hasMinted}
             loading={minting}
           >
             Mint
-          </Button> */}
+          </Button>
           Mint coming soon !
         </div>
         <div className="fixed bottom-0 w-full left-0">
           <Footer />
         </div>
       </div>
+      <MintModal
+        open={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onMint={handleMint}
+      />
     </Layout>
   );
 };
