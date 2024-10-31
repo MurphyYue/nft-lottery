@@ -7,9 +7,24 @@ import '@styles/index.scss';
 import WalletProvider from '@wallets/WalletProvider'
 import { EXPLORER_HOST_ETH, EXPLORER_HOST_POLYGON } from "@config/env";
 import '../globals.css';
+import { useRouter } from 'next/router';
+import { useDispatch } from 'react-redux';
+import { setInviterAddress } from '@store/user';
+
 export const runtime = 'experimental-edge';
 
+
 function MyApp({ Component, pageProps }) {
+  const router = useRouter(); 
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const inviterAddress = router.query.inviterAddress;
+    if (inviterAddress) {
+      dispatch(setInviterAddress(inviterAddress));
+    } else {
+      dispatch(setInviterAddress(''));
+    }
+  }, [router.query.inviterAddress]);
   useEffect(() => {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side');

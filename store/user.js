@@ -16,6 +16,7 @@ export const slice = createSlice({
       followers_count: '' // 粉丝数
     },
     selectedNetwork: ETH_TYPE, // 默认网络
+    inviterAddress: '',
   },
   reducers: {
     setUser: (state, { payload }) => {
@@ -35,10 +36,13 @@ export const slice = createSlice({
     setSelectedNetwork: (state, { payload }) =>  {
       state.selectedNetwork = payload;
     },
+    setInviterAddress: (state, { payload }) => {
+      state.inviterAddress = payload;
+    },
   },
 });
 
-export const { setUser, setTwitterInfo, setSelectedNetwork } = slice.actions;
+export const { setUser, setTwitterInfo, setSelectedNetwork, setInviterAddress } = slice.actions;
 
 
 // getter

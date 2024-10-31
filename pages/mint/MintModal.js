@@ -1,8 +1,10 @@
 import { Button, Modal, Input } from "@lidofinance/lido-ui";
 import { useState } from "react";
+import { useSelector } from 'react-redux';
 
 function MintModal({ open, onClose, onMint }) {
-  const [inviterAddress, setInviterAddress] = useState("");
+  const inviterAddressUrl = useSelector((state) => state.user.inviterAddress);
+  const [inviterAddress, setInviterAddress] = useState(inviterAddressUrl);
 
   const handleInputChange = (e) => {
     setInviterAddress(e.target.value);
