@@ -8,7 +8,7 @@ import WalletProvider from '@wallets/WalletProvider'
 import { EXPLORER_HOST_ETH, EXPLORER_HOST_POLYGON } from "@config/env";
 import '../globals.css';
 import { useRouter } from 'next/router';
-import { useDispatch } from 'react-redux';
+import { dispatch } from '@store/index';
 import { setInviterAddress } from '@store/user';
 
 export const runtime = 'experimental-edge';
@@ -16,7 +16,6 @@ export const runtime = 'experimental-edge';
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter(); 
-  const dispatch = useDispatch();
   useEffect(() => {
     const inviterAddress = router.query.inviterAddress;
     if (inviterAddress) {

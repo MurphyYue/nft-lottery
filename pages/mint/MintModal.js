@@ -27,11 +27,12 @@ function MintModal({ open, onClose, onMint }) {
             label="Email address"
             rightDecorator={<Button size="xs" onClick={handleMintClick}>Mint</Button>}
             themeOverride="light"
+            className="text-white [&_input]:text-white"
           />
         </div>
         <div className="flex justify-center">
           <button className="text-xs flex items-center" onClick={() => onMint(null)}>
-            I don't have an inviter, just mint <span className="ml-1">→</span>
+            No inviter, just mint <span className="ml-1">→</span>
           </button>
         </div>
       </div>
