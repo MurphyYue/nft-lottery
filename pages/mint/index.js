@@ -95,7 +95,6 @@ const Mint = () => {
       });
     } catch (error) {
       notify(error, "error");
-      console.error("Error minting:", error);
     } finally {
       setMinting(false);
     }
@@ -106,7 +105,7 @@ const Mint = () => {
       return;
     }
     if (hasMinted) {
-      notify("You have already minted", "error");
+      notify("You have already minted", "info");
       return;
     }
     // show mint modal
@@ -120,11 +119,11 @@ const Mint = () => {
     }
     setIsModalOpen(false);
     if (hasMinted) {
-      notify("You have already minted", "error");
+      notify("You have already minted", "info");
       return;
     }
     if (isPaused) {
-      notify("Mint is paused", "error");
+      notify("Mint is paused", "info");
       return;
     } else {
       await mint(inviterAddress);
