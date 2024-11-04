@@ -8,11 +8,12 @@ const tabs = [
     path: "/mint",
     needLogin: false,
   },
-  // {
-  //   name: "My NFT",
-  //   path: "/my-nft",
-  //   needLogin: true,
-  // },
+  {
+    name: "My NFT",
+    path: "/my-nft",
+    needLogin: true,
+    minter: true,
+  },
   // {
   //   name: "My MINT",
   //   path: "/my-mint",
@@ -25,4 +26,4 @@ const tabs = [
   },
 ];
 
-export default tabs
+export default tabs;
