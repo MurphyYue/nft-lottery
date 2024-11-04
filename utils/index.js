@@ -6,7 +6,7 @@ import {
   EXPLORER_HOST_ETH,
   EXPLORER_HOST_POLYGON,
 } from "@config/env";
-import { BLAST_TYPE, HOST_DATA, SCROLL_TYPE, ETH_TYPE } from '@config/chains'
+import { BLAST_TYPE, HOST_DATA, SCROLL_TYPE, ETH_TYPE, POLYGON_TYPE } from '@config/chains'
 import BigNumber from 'bignumber.js'
 import { utils } from 'ethers'
 import { useMergeRefs as useCallbackMergeRefs } from 'use-callback-ref'
