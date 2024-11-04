@@ -13,55 +13,25 @@ import { Button } from "@lidofinance/lido-ui";
 import MintModal from "./MintModal";
 
 const useContractData = (address) => {
-  const [isPublicSaleTime, setIsPublicSaleTime] = useState(false);
   const [hasMinted, setHasMinted] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
+  const [salePrice, setSalePrice] = useState(0);
 
-  const fetchAllowlistPrice = async () => {
-    const res = await readContract({
-      ...LotteryContractConfig,
-      functionName: "AllowlistPrice",
-      args: [],
-    });
-    return res;
-  };
-
-  const fetchPublicSalePrice = async () => {
-    const res = await readContract({
-      ...LotteryContractConfig,
-      functionName: "PublicSalePrice",
-      args: [],
-    });
-    console.log(utils.formatEther(res));
-    return res;
-  };
-
-  // check if address is in the white list
-  const checkAllowlist = async () => {
-    const res = await readContract({
-      ...LotteryContractConfig,
-      functionName: "allowlist",
-      args: [address],
-    });
-    console.log("checkAllowlist", res);
-    return res;
-  };
-
-  const fetchPublicSaleStartTime = async () => {
+  const fetchSalePrice = async () => {
     try {
       const res = await readContract({
         ...LotteryContractConfig,
-        functionName: "PublicSaleStartTime",
+        functionName: "SalePrice",
         args: [],
       });
-      console.log("PublicSaleStartTime", res);
-      return res;
+      console.log(utils.formatEther(res));
+      setSalePrice(res);
     } catch (error) {
-      console.error("Error fetching PublicSaleStartTime:", error);
-      return 0;
+      console.error("Error fetching sale price:", error);
     }
   };
 
-  const fetchTokenIdOfMinter = async () => {
+  const checkHasMinted = async () => {
     try {
       const res = await readContract({
         ...LotteryContractConfig,
@@ -74,66 +44,54 @@ const useContractData = (address) => {
     }
   };
 
+  const fetchPaused = async () => {
+    try {
+      const res = await readContract({
+        ...LotteryContractConfig,
+        functionName: "paused",
+        args: [],
+      });
+      setIsPaused(res);
+    } catch (error) {
+      console.error("Error fetching paused:", error);
+    }
+  };
+
   useEffect(() => {
-    const fetchSaleStartTime = async () => {
-      const timestamp = await fetchPublicSaleStartTime();
-      const publicSaleTime = new Date(Number(timestamp)).getTime(); // 转换为秒
-      const now = parseInt(new Date().getTime() / 1000);
-      setIsPublicSaleTime(publicSaleTime < now);
-    };
-    fetchSaleStartTime();
-    fetchTokenIdOfMinter();
+    // check if user has minted
+    checkHasMinted();
+    // check if mint is paused
+    fetchPaused();
+    // fetch sale price
+    fetchSalePrice();
   }, [address]);
 
   return {
-    isPublicSaleTime,
     hasMinted,
-    fetchAllowlistPrice,
-    fetchPublicSalePrice,
-    checkAllowlist,
+    salePrice,
+    isPaused,
   };
 };
 
 const Mint = () => {
+  // if wallet is connected, fetch user's mint status
   const { active, address } = useWallet();
   const { openConnectModal } = useConnectModal();
+  // minting state  
   const [minting, setMinting] = useState(false);
+  // modal state
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const {
-    isPublicSaleTime,
-    hasMinted,
-    fetchAllowlistPrice,
-    fetchPublicSalePrice,
-    checkAllowlist,
-  } = useContractData(address);
-
-  const allowlistMint = async (address) => {
-    setMinting(true);
-    try {
-      const price = await fetchAllowlistPrice();
-      await writeContract("allowlistMint", {
-        ...LotteryContractConfig,
-        functionName: "allowlistMint",
-        args: [address],
-        value: price,
-      });
-    } catch (error) {
-      notify(error, "error");
-      console.error("Error allowlist minting:", error);
-    } finally {
-      setMinting(false);
-    }
-  };
+  // contract data
+  const { hasMinted, salePrice, isPaused } = useContractData(address);
 
   const mint = async (address) => {
     setMinting(true);
     try {
-      const price = await fetchPublicSalePrice();
       await writeContract("mint", {
         ...LotteryContractConfig,
         functionName: "mint",
         args: [address],
-        value: price,
+        value: salePrice,
       });
     } catch (error) {
       notify(error, "error");
@@ -160,13 +118,9 @@ const Mint = () => {
       notify("You have already minted", "error");
       return;
     }
-    if (isPublicSaleTime) {
-      await allowlistMint(inviterAddress);
+    if (isPaused) {
+      notify("Mint is paused", "error");
       return;
-    }
-    const isAllowlist = await checkAllowlist();
-    if (isAllowlist) {
-      await allowlistMint(inviterAddress);
     } else {
       await mint(inviterAddress);
     }
