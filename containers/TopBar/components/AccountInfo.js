@@ -1,6 +1,6 @@
 import { makeStyles, capitalize } from '@material-ui/core';
 import { useCallback, useMemo, useEffect, useState } from 'react';
-import { Button, ButtonIcon, Modal, Copy, External } from '@lidofinance/lido-ui';
+import { Button, ButtonIcon, Modal, Copy, External, ArrowTop } from '@lidofinance/lido-ui';
 import { useSelector } from 'react-redux';
 import AddressBadgeAlt from '@components/AddressBadgeAlt';
 import { useCopyToClipboard } from '@hooks/useCopyToClipboard';
@@ -64,6 +64,9 @@ function AccountInfo({ wallet }) {
   const handleEtherscan = useCallback(() => {
     window.open(`${EXPLORER_HOST}/address/${address}`)
   }, [])
+  
+  const [inviteLink, setInviteLink] = useState('');
+  const copyInviteLink = useCopyToClipboard(inviteLink ?? '');
   const router = useRouter();
 
   const handleClose = useCallback(() => {
@@ -96,6 +99,7 @@ function AccountInfo({ wallet }) {
   };
   useEffect(() => {
     // address && tokenOfOwnerByIndex();
+    setInviteLink(`${window.location.origin}/?inviterAddress=${address}`);
   }, [address]);
 
   const goDetail = () => {
@@ -139,11 +143,19 @@ function AccountInfo({ wallet }) {
           </ButtonIcon>
           <ButtonIcon
             onClick={(handleEtherscan)}
-            icon={<External />}
+            icon={<ArrowTop />}
             size="xs"
             variant="ghost"
           >
             Explorer
+          </ButtonIcon>
+          <ButtonIcon
+            onClick={(copyInviteLink)}
+            icon={<External />}
+            size="xs"
+            variant="ghost"
+          >
+            Invite
           </ButtonIcon>
         </div>
       </div>
