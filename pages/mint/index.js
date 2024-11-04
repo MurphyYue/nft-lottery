@@ -114,6 +114,7 @@ const Mint = () => {
       openConnectModal();
       return;
     }
+    setIsModalOpen(false);
     if (hasMinted) {
       notify("You have already minted", "error");
       return;

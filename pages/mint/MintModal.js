@@ -11,7 +11,7 @@ function MintModal({ open, onClose, onMint }) {
   };
 
   const handleMintClick = () => {
-    onMint(inviterAddress || null);
+    onMint(inviterAddress || "0x0000000000000000000000000000000000000000");
   };
 
   return (
@@ -31,7 +31,7 @@ function MintModal({ open, onClose, onMint }) {
           />
         </div>
         <div className="flex justify-center">
-          <button className="text-xs flex items-center" onClick={() => onMint(null)}>
+          <button className="text-xs flex items-center" onClick={handleMintClick}>
             No inviter, just mint <span className="ml-1">→</span>
           </button>
         </div>

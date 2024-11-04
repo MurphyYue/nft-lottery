@@ -94,7 +94,7 @@ export default function AddressIcon({ address }) {
   return (
     <div>
       {
-        mintedNft?.imageUrl || mintedNft?.tokenId ? <img
+        mintedNft?.imageUrl && mintedNft?.tokenId ? <img
         src={mintedNft.imageUrl}
         alt={mintedNft.imageUrl ? mintedNft.tokenId : "failed to get nft image"}
         className="rounded-full w-8 h-8"
