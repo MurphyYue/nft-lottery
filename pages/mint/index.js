@@ -105,6 +105,10 @@ const Mint = () => {
       openConnectModal();
       return;
     }
+    if (hasMinted) {
+      notify("You have already minted", "error");
+      return;
+    }
     // show mint modal
     setIsModalOpen(true);
   };
@@ -144,7 +148,6 @@ const Mint = () => {
               themeoverride="light"
               variant="filled"
               onClick={manageMint}
-              disabled={hasMinted}
               loading={minting}
             >
               Mint
