@@ -15,7 +15,7 @@ const tabs = [
     minter: true,
   },
   {
-    name: "My MINT",
+    name: "My Royalty",
     path: "/my-mint",
     needLogin: true,
     minter: true,
