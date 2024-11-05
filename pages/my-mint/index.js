@@ -71,7 +71,7 @@ const fetchReleasable = async (address, claimContractAddress) => {
       args: [address],
     });
     const releasable = ethers.utils.formatUnits(res, 18);
-    return releasable;
+    return Number(releasable);
   } catch (error) {
     console.error("Error fetching releasable royalties:", error);
     return 0;

@@ -14,11 +14,12 @@ const tabs = [
     needLogin: true,
     minter: true,
   },
-  // {
-  //   name: "My MINT",
-  //   path: "/my-mint",
-  //   needLogin: true,
-  // },
+  {
+    name: "My MINT",
+    path: "/my-mint",
+    needLogin: true,
+    minter: true,
+  },
   {
     name: "Preview",
     path: "/preview",
