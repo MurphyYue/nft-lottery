@@ -67,7 +67,7 @@ export async function writeContract(operate, param) {
     const gasPrice = await getGasPrice(); // 获取当前的 gasPrice
     console.log('gasPrice', gasPrice);
     console.log("param", param);
-    const hashData = await writeContractWagmi({ ...param, gasPrice, gas: parseGwei('700000') }); // 设置 gasPrice
+    const hashData = await writeContractWagmi({ ...param, gasPrice, gas: parseGwei('0.0007') }); // 设置 gasPrice
     dispatch(setSubmitModalParam({ type: _operate, state: 'submitted', hash: hashData.hash }));
     console.log('hashData', hashData);
     const receipt = await waitForTransaction(hashData);
@@ -75,7 +75,7 @@ export async function writeContract(operate, param) {
     hashNotify(hashData.hash, receipt.status ? 'success' : 'failed');
     console.log('receipt', receipt);
   } catch (err) {
-    // console.log('error', err);
+    console.log('error', err);
     const isInsufficientFundsError = err.walk((e) => e instanceof InsufficientFundsError);
     if (isInsufficientFundsError) {
       return Promise.reject('Insufficient funds');

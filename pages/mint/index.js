@@ -86,12 +86,15 @@ const Mint = () => {
 
   const mint = async (address) => {
     setMinting(true);
+    const actualPrice = address 
+    ? (salePrice * BigInt(90)) / BigInt(100)  // 90% of price
+    : salePrice;
     try {
       await writeContract("mint", {
         ...LotteryContractConfig,
         functionName: "mint",
         args: [address],
-        value: salePrice,
+        value: actualPrice,
       });
     } catch (error) {
       notify(error, "error");
