@@ -1,10 +1,11 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import styles from "./index.module.scss";
 import Router, { useRouter } from "next/router";
 import useWallet from "@wallets/useWallet";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { readContract } from "@wagmi/core";
 import { LotteryContractConfig } from "@config/constants";
+import { add } from "lodash";
 
 // determine whether the current address's user is an minter.
 const minterValidate = async (address) => {
@@ -24,8 +25,15 @@ const minterValidate = async (address) => {
 
 export default function Tabs({ tabs = [] }) {
   const { active, address } = useWallet();
-  const haveMinted = active && minterValidate(address);
-  
+  const [haveMinted, setHaveMinted] = useState(false);
+  useEffect(() => {
+    const fetchData = async () => {
+      const haveMinted1 = await minterValidate(address);
+      setHaveMinted(haveMinted1 && active);
+      console.log("haveMinted", haveMinted);
+    }
+    fetchData();
+  }, [address]);
   const { asPath } = useRouter();
   const { openConnectModal } = useConnectModal();
 
