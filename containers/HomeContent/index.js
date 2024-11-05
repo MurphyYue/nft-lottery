@@ -1,17 +1,36 @@
-import SaleTime from "@components/SaleTime";
 import HomeBg1 from "@images/ether_1.jpg";
 import HomeBg2 from "@images/ether_2.jpg";
 import HomeBg3 from "@images/ether_3.jpg";
 import HomeBg4 from "@images/ether_4.png";
+import { useState, useEffect } from "react";
+import { readContract } from "@wagmi/core";
+import { LotteryContractConfig } from "@config/constants";
 
 const Home = () => {
+  const [isPaused, setIsPaused] = useState(false);
+  const fetchPaused = async () => {
+    try {
+      const res = await readContract({
+        ...LotteryContractConfig,
+        functionName: "paused",
+        args: [],
+      });
+      setIsPaused(res);
+    } catch (error) {
+      console.error("Error fetching paused:", error);
+    }
+  };
+  useEffect(() => {
+    // check if mint is paused
+    fetchPaused();
+  }, []);
   return (
     <div
       className="px-4 sm:px-8 lg:px-16 overflow-y-auto"
       style={{ height: "calc(100vh - 152px)" }}
     >
       <main>
-        <SaleTime />
+        <div className="w-full text-center text-4xl font-semibold py-4">{isPaused ? "Mint coming soon!" : null}</div>
         <div>
           <div className="flex flex-col md:flex-row md:even:flex-row-reverse">
             <div className="w-full md:max-w-[30%]">
