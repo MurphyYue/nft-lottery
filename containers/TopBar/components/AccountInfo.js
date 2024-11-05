@@ -99,7 +99,7 @@ function AccountInfo({ wallet }) {
   };
   useEffect(() => {
     // address && tokenOfOwnerByIndex();
-    setInviteLink(`${window.location.origin}/?inviterAddress=${address}`);
+    setInviteLink(`${window.location.origin}/mint?inviterAddress=${address}`);
   }, [address]);
 
   const goDetail = () => {
