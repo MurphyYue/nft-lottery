@@ -17,6 +17,7 @@ export const slice = createSlice({
     },
     selectedNetwork: POLYGON_TYPE, // 默认网络
     inviterAddress: '',
+    minted: false,
   },
   reducers: {
     setUser: (state, { payload }) => {
@@ -39,10 +40,13 @@ export const slice = createSlice({
     setInviterAddress: (state, { payload }) => {
       state.inviterAddress = payload;
     },
+    setMinted: (state, { payload }) => {
+      state.minted = payload;
+    },
   },
 });
 
-export const { setUser, setTwitterInfo, setSelectedNetwork, setInviterAddress } = slice.actions;
+export const { setUser, setTwitterInfo, setSelectedNetwork, setInviterAddress, setMinted } = slice.actions;
 
 
 // getter

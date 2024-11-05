@@ -6,6 +6,7 @@ import { sendTransaction as sendTransactionWagmi, writeContract as writeContract
 import { capitalize } from "lodash";
 import { ethers } from "ethers";
 import { parseGwei, InsufficientFundsError } from "viem";
+import { setMinted } from '@store/user';
 
 export function toHex(str) {
   let result = '';
@@ -71,6 +72,9 @@ export async function writeContract(operate, param) {
     dispatch(setSubmitModalParam({ type: _operate, state: 'submitted', hash: hashData.hash }));
     console.log('hashData', hashData);
     const receipt = await waitForTransaction(hashData);
+    if (receipt.status) {
+      dispatch(setMinted(true));
+    }
     dispatch(setSubmitModalParam({ state: receipt.status ? 'success' : 'failed' }));
     hashNotify(hashData.hash, receipt.status ? 'success' : 'failed');
     console.log('receipt', receipt);

@@ -5,7 +5,9 @@ import useWallet from "@wallets/useWallet";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { readContract } from "@wagmi/core";
 import { LotteryContractConfig } from "@config/constants";
-import { add } from "lodash";
+import { dispatch } from '@store/index';
+import { setMinted } from '@store/user';
+import { useSelector } from 'react-redux';
 
 // determine whether the current address's user is an minter.
 const minterValidate = async (address) => {
@@ -25,12 +27,11 @@ const minterValidate = async (address) => {
 
 export default function Tabs({ tabs = [] }) {
   const { active, address } = useWallet();
-  const [haveMinted, setHaveMinted] = useState(false);
+  const minted = useSelector((state) => state.user.minted);
   useEffect(() => {
     const fetchData = async () => {
       const haveMinted1 = await minterValidate(address);
-      setHaveMinted(haveMinted1 && active);
-      console.log("haveMinted", haveMinted);
+      dispatch(setMinted(haveMinted1 && active));
     }
     fetchData();
   }, [address]);
@@ -51,7 +52,7 @@ export default function Tabs({ tabs = [] }) {
   return (
     <div className={`${styles.root}`}>
       {tabs.map((tab, i) => {
-        const shouldRender = haveMinted || !tab.minter;
+        const shouldRender = minted || !tab.minter;
         return (
           shouldRender && (
             <div
