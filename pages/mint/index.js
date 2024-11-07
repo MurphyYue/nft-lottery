@@ -24,7 +24,6 @@ const useContractData = (address) => {
         functionName: "SalePrice",
         args: [],
       });
-      console.log(utils.formatEther(res));
       setSalePrice(res);
     } catch (error) {
       console.error("Error fetching sale price:", error);
@@ -83,11 +82,16 @@ const Mint = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   // contract data
   const { hasMinted, salePrice, isPaused } = useContractData(address);
+  // 90% of price
+  const discountPrice = BigInt(salePrice) * BigInt(90) / BigInt(100);
+  // display price by eth
+  const displayPrice = utils.formatEther(salePrice);
+  const displayDiscountPrice = utils.formatEther(discountPrice);
 
   const mint = async (address) => {
     setMinting(true);
     const actualPrice = address 
-    ? (salePrice * BigInt(90)) / BigInt(100)  // 90% of price
+    ? discountPrice  // 90% of price
     : salePrice;
     try {
       await writeContract("mint", {
@@ -144,16 +148,19 @@ const Mint = () => {
           {isPaused ? (
             <div>Mint coming soon !</div>
           ) : (
-            <Button
-              color="primary"
-              size="xs"
-              themeoverride="light"
-              variant="filled"
-              onClick={manageMint}
-              loading={minting}
-            >
-              Mint
-            </Button>
+            <div className="flex flex-col items-center">
+              <div className="text-xs text-center mb-4">{`Mint Price: ${displayPrice} ETH. Use the invitation code to get a discounted price: ${displayDiscountPrice} ETH.`}</div>
+              <Button
+                color="primary"
+                size="xs"
+                themeoverride="light"
+                variant="filled"
+                onClick={manageMint}
+                loading={minting}
+              >
+                Mint
+              </Button>
+            </div>
           )}
         </div>
         <div className="fixed bottom-0 w-full left-0">
