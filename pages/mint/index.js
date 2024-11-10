@@ -89,15 +89,17 @@ const Mint = () => {
   const displayDiscountPrice = utils.formatEther(discountPrice);
 
   const mint = async (address) => {
+    console.log("address", address);
     setMinting(true);
     const actualPrice = address 
     ? discountPrice  // 90% of price
     : salePrice;
+    const addressParam = address || "0x0000000000000000000000000000000000000000";
     try {
       await writeContract("mint", {
         ...LotteryContractConfig,
         functionName: "mint",
-        args: [address],
+        args: [addressParam],
         value: actualPrice,
       });
     } catch (error) {

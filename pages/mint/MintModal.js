@@ -14,7 +14,7 @@ function MintModal({ open, onClose, onMint }) {
   };
 
   const handleMintClick = () => {
-    onMint(inviterAddress || "0x0000000000000000000000000000000000000000");
+    onMint(inviterAddress);
   };
 
   return (
