@@ -16,7 +16,7 @@ const useContractData = (address) => {
   const [hasMinted, setHasMinted] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [salePrice, setSalePrice] = useState(0);
-
+  const [discountAmount, setDiscountAmount] = useState(0);
   const fetchSalePrice = async () => {
     try {
       const res = await readContract({
@@ -27,6 +27,19 @@ const useContractData = (address) => {
       setSalePrice(res);
     } catch (error) {
       console.error("Error fetching sale price:", error);
+    }
+  };
+
+  const fetchDiscountAmount = async () => {
+    try {
+      const res = await readContract({
+        ...LotteryContractConfig,
+        functionName: "DiscountAmount",
+        args: [],
+      });
+      setDiscountAmount(res);
+    } catch (error) {
+      console.error("Error fetching discount amount:", error);
     }
   };
 
@@ -63,11 +76,14 @@ const useContractData = (address) => {
     fetchPaused();
     // fetch sale price
     fetchSalePrice();
+    // fetch discount amount
+    fetchDiscountAmount();
   }, [address]);
 
   return {
     hasMinted,
     salePrice,
+    discountAmount,
     isPaused,
   };
 };
@@ -81,9 +97,12 @@ const Mint = () => {
   // modal state
   const [isModalOpen, setIsModalOpen] = useState(false);
   // contract data
-  const { hasMinted, salePrice, isPaused } = useContractData(address);
-  // 90% of price
-  const discountPrice = BigInt(salePrice) * BigInt(90) / BigInt(100);
+  const { hasMinted, salePrice, isPaused, discountAmount } =
+    useContractData(address);
+  // discountPrice is salePrice - discountAmount
+  console.log("salePrice", utils.formatEther(BigInt(salePrice)));
+  console.log("discountAmount", utils.formatEther(BigInt(discountAmount)));
+  const discountPrice = BigInt(salePrice) - BigInt(discountAmount);
   // display price by eth
   const displayPrice = utils.formatEther(salePrice);
   const displayDiscountPrice = utils.formatEther(discountPrice);
@@ -91,10 +110,12 @@ const Mint = () => {
   const mint = async (address) => {
     console.log("address", address);
     setMinting(true);
-    const actualPrice = address 
-    ? discountPrice  // 90% of price
-    : salePrice;
-    const addressParam = address || "0x0000000000000000000000000000000000000000";
+    const actualPrice =
+      address && address !== "0x0000000000000000000000000000000000000000"
+        ? discountPrice // 90% of price
+        : salePrice;
+    const addressParam =
+      address || "0x0000000000000000000000000000000000000000";
     try {
       await writeContract("mint", {
         ...LotteryContractConfig,
