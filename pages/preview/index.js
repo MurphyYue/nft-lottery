@@ -10,7 +10,7 @@ const ImageGrid = () => {
   const [loading, setLoading] = useState(false);
   const containerRef = useRef(null);
   const IMAGE_BASE_URL =
-    "https://violet-cheerful-starfish-646.mypinata.cloud/ipfs/QmWPsP1pYDQtGJD7CBYWLeF23efsdSFVMWqUqLwhRg6DoG/image_";
+    "https://violet-cheerful-starfish-646.mypinata.cloud/ipfs/bafybeifant5wcyffvhhqeloakp3b2lukh55pwbj5jy6pa4wi4h7lws6icq/";
   const loadImages = (page) => {
     // Simulate fetching images from an API
     const step = 12;
