@@ -35,6 +35,7 @@ export async function sendTransaction(operate, data) {
     dispatch(setSubmitModalParam({ state: 'submitted', hash: hashData.hash }))
     console.log('hashData', hashData)
     const receipt = await waitForTransaction(hashData);
+    console.log("recewaitForTransactionipt", hashData);
     dispatch(setSubmitModalParam({ state: receipt.status ? 'success' : 'failed' }))
     hashNotify(hashData.hash, receipt.status ? 'success' : 'failed')
     console.log('receipt', receipt)

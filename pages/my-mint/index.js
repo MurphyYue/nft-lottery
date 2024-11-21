@@ -105,11 +105,11 @@ const fetchRelease = async (address, claimContractAddress) => {
       args: [address],
       gasLimit: 100000,
     });
-    console.log("relese", res)
+    console.log("fetchRelease", res)
     return true;
   } catch (error) {
     notify(error, "error");
-    console.error("Error releasing royalties:", error);
+    console.error("Error fetchRelease royalties:", error);
     return false;
   }
 };
