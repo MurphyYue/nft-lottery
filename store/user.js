@@ -15,7 +15,7 @@ export const slice = createSlice({
       web3_address: '', // 钱包地址
       followers_count: '' // 粉丝数
     },
-    selectedNetwork: ETH_TYPE, // 默认网络
+    selectedNetwork: POLYGON_TYPE, // 默认网络
     inviterAddress: '',
     minted: false,
   },
