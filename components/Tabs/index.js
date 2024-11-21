@@ -6,7 +6,7 @@ import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { readContract } from "@wagmi/core";
 import { LotteryContractConfig } from "@config/constants";
 import { dispatch } from '@store/index';
-import { setMinted } from '@store/user';
+import { setMinted, setHasNft } from '@store/user';
 import { useSelector } from 'react-redux';
 
 // determine whether the current address's user is an minter.
@@ -25,13 +25,31 @@ const minterValidate = async (address) => {
   }
 };
 
+const nftBalance = async (address) => {
+  try {
+    const balance = await readContract({
+      ...LotteryContractConfig,
+      functionName: "balanceOf",
+      args: [address],
+    });
+    return Number(balance);
+  } catch (error) {
+    console.error("Error fetching NFTs:", error);
+  }
+}
+
 export default function Tabs({ tabs = [] }) {
   const { active, address } = useWallet();
   const minted = useSelector((state) => state.user.minted);
+  const hasNft = useSelector((state) => state.user.hasNft);
+  console.log('fadfasf')
   useEffect(() => {
     const fetchData = async () => {
+      console.log('+++++')
       const haveMinted1 = await minterValidate(address);
       dispatch(setMinted(haveMinted1 && active));
+      const nftNumber = await nftBalance(address);
+      dispatch(setHasNft(nftNumber > 0 && active));
     }
     fetchData();
   }, [address]);
@@ -52,7 +70,7 @@ export default function Tabs({ tabs = [] }) {
   return (
     <div className={`${styles.root}`}>
       {tabs.map((tab, i) => {
-        const shouldRender = minted || !tab.minter;
+        let shouldRender = tab.nftNumber ? hasNft : minted || !tab.minter;
         return (
           shouldRender && (
             <div

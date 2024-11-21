@@ -18,6 +18,7 @@ export const slice = createSlice({
     selectedNetwork: POLYGON_TYPE, // 默认网络
     inviterAddress: '',
     minted: false,
+    hasNft: false
   },
   reducers: {
     setUser: (state, { payload }) => {
@@ -43,10 +44,13 @@ export const slice = createSlice({
     setMinted: (state, { payload }) => {
       state.minted = payload;
     },
+    setHasNft: (state, { payload }) => {
+      state.hasNft = payload;
+    },
   },
 });
 
-export const { setUser, setTwitterInfo, setSelectedNetwork, setInviterAddress, setMinted } = slice.actions;
+export const { setUser, setTwitterInfo, setSelectedNetwork, setInviterAddress, setMinted, setHasNft } = slice.actions;
 
 
 // getter

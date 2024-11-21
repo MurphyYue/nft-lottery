@@ -12,7 +12,7 @@ const tabs = [
     name: "My NFT",
     path: "/my-nft",
     needLogin: true,
-    minter: true,
+    nftNumber: true,
   },
   {
     name: "My Royalty",
