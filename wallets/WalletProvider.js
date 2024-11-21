@@ -71,7 +71,7 @@ const Eth = {
 };
 
 const WalletProvider = ({ children }) => {
-  let _chains = IS_PROD === "true" ? [polygon] : [polygon];
+  let _chains = IS_PROD === "true" ? [mainnet] : [mainnet];
 
   const { chains, publicClient } = configureChains(_chains, [publicProvider()]);
 

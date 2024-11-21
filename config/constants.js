@@ -2,8 +2,8 @@ import VGodABI from "@abis/VGodABI.json";
 import PaymentSplitterReferenceABI from "@abis/PaymentSplitterReferenceABI.json";
 
 
-export const VGodAddr = "0xE0423aAB1a80D7f43E91Dd10Db42B5c03D3cd2B3";
-export const PaymentSplitterReferenceAddr = "0x40c97c73a96623fc6e7b9b90dc8aeb15f8b47dc1";
+export const VGodAddr = "0x6f4Ec68f61F5EC04A83a409DbB5496e5F70D434b";
+export const PaymentSplitterReferenceAddr = "0x807AC06B90B3442334A80CD082622663163dF00C";
 
 
 export const LotteryContractConfig = {
