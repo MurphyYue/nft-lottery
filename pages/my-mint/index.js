@@ -36,7 +36,8 @@ const fetchTokenURI = async (tokenId) => {
 
 const fetchImage = async (ipfsUri) => {
   try {
-    const ipfsGateway = "https://violet-cheerful-starfish-646.mypinata.cloud/ipfs/";
+    const ipfsGateway =
+      "https://violet-cheerful-starfish-646.mypinata.cloud/ipfs/";
     const ipfsHash = ipfsUri.replace("ipfs://", "");
     const url = `${ipfsHash}`;
     const { data } = await axios.get(url);
@@ -106,8 +107,7 @@ const fetchRelease = async (address, claimContractAddress) => {
       args: [address],
       gasLimit: 100000,
     });
-    console.log("fetchRelease", res)
-
+    console.log("fetchRelease", res);
     return true;
   } catch (error) {
     notify(error, "error");
@@ -147,7 +147,7 @@ const minterValidate = async (address) => {
     console.error("Error haveMinted:", error);
     return false;
   }
-}
+};
 
 const NFTDetailPage = () => {
   const router = useRouter();
@@ -192,15 +192,13 @@ const NFTDetailPage = () => {
 
   const handleRelease = async () => {
     setReleasing(true);
-    const success = await fetchRelease(address, claimContractAddress);
-    if (success) {
-      const [releasableAmount, releasedAmount] = await Promise.all([
-        address && fetchReleasable(address, claimContractAddress),
-        address && fetchReleased(address, claimContractAddress),
-      ]);
-      setReleasable(releasableAmount);
-      setReleased(releasedAmount);
-    }
+    await fetchRelease(address, claimContractAddress);
+    const [releasableAmount, releasedAmount] = await Promise.all([
+      address && fetchReleasable(address, claimContractAddress),
+      address && fetchReleased(address, claimContractAddress),
+    ]);
+    setReleasable(releasableAmount);
+    setReleased(releasedAmount);
     setReleasing(false);
   };
 
@@ -226,7 +224,11 @@ const NFTDetailPage = () => {
           <div className="flex justify-center flex-col items-center">
             <img
               src={mintedNft.imageUrl}
-              alt={mintedNft.imageUrl ? mintedNft.tokenId : "failed to get nft image"}
+              alt={
+                mintedNft.imageUrl
+                  ? mintedNft.tokenId
+                  : "failed to get nft image"
+              }
               className="mb-4 w-full aspect-square object-cover rounded-3xl md:w-1/2 lg:w-1/3 2xl:w-1/4 cursor-pointer"
               onClick={() => mintedNft.imageUrl && setIsModalOpen(true)}
             />
