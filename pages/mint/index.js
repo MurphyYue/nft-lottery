@@ -100,15 +100,12 @@ const Mint = () => {
   const { hasMinted, salePrice, isPaused, discountAmount } =
     useContractData(address);
   // discountPrice is salePrice - discountAmount
-  console.log("salePrice", utils.formatEther(BigInt(salePrice)));
-  console.log("discountAmount", utils.formatEther(BigInt(discountAmount)));
   const discountPrice = BigInt(salePrice) - BigInt(discountAmount);
   // display price by eth
   const displayPrice = utils.formatEther(salePrice);
   const displayDiscountPrice = utils.formatEther(discountPrice);
 
   const mint = async (address) => {
-    console.log("address", address);
     setMinting(true);
     const actualPrice =
       address && address !== "0x0000000000000000000000000000000000000000"
@@ -175,7 +172,7 @@ const Mint = () => {
               <div className="text-xs text-center mb-4">{`Mint Price: ${displayPrice} ETH. Use the invitation code to get a discounted price: ${displayDiscountPrice} ETH.`}</div>
               <Button
                 color="primary"
-                size="xs"
+                size="sm"
                 themeoverride="light"
                 variant="filled"
                 onClick={manageMint}

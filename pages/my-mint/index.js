@@ -252,7 +252,7 @@ const NFTDetailPage = () => {
                 </span>
                 <Button
                   color="primary"
-                  size="xs"
+                  size="sm"
                   themeoverride="light"
                   variant="filled"
                   onClick={handleRelease}

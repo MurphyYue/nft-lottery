@@ -42,10 +42,8 @@ export default function Tabs({ tabs = [] }) {
   const { active, address } = useWallet();
   const minted = useSelector((state) => state.user.minted);
   const hasNft = useSelector((state) => state.user.hasNft);
-  console.log('fadfasf')
   useEffect(() => {
     const fetchData = async () => {
-      console.log('+++++')
       const haveMinted1 = await minterValidate(address);
       dispatch(setMinted(haveMinted1 && active));
       const nftNumber = await nftBalance(address);
