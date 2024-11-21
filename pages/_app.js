@@ -31,7 +31,7 @@ function MyApp({ Component, pageProps }) {
       jssStyles.parentElement.removeChild(jssStyles);
     }
     // 默认网络放到localStorage存储
-  window.localStorage.setItem("EXPLORER_HOST", EXPLORER_HOST_POLYGON);
+  window.localStorage.setItem("EXPLORER_HOST", EXPLORER_HOST_ETH);
   }, []);
 
   return (

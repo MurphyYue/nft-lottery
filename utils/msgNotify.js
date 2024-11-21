@@ -37,7 +37,7 @@ export const notify = (text, type = 'success') => {
 };
 
 export const hashNotify = (hash, type = 'success', title) => {
-  const host = window.localStorage.getItem("EXPLORER_HOST") || EXPLORER_HOST_POLYGON;
+  const host = window.localStorage.getItem("EXPLORER_HOST") || EXPLORER_HOST_ETH;
   ToastSuccess(
     <div className={'toastMain'}>
       <img className={'toastSvg'} src={type === 'success' ? Right.src : Error.src} />
