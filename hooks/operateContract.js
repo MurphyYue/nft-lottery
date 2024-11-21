@@ -89,6 +89,9 @@ export async function writeContract(operate, param) {
     } else {
       dispatch(setSubmitModalParam({ state: 'failed' }));
     }
+    if (err?.cause?.shortMessage.includes("reason:")) {
+      return Promise.reject(err?.cause?.shortMessage.split("reason:")[1]);
+    }
     return Promise.reject(err?.cause?.shortMessage);
   }
 }
