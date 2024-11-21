@@ -9,6 +9,7 @@ import Footer from "@components/Footer";
 import { Loader, Button } from "@lidofinance/lido-ui";
 import { notify } from "@utils/msgNotify";
 import { ethers } from "ethers";
+import { useRouter } from "next/router";
 
 const fetchTokenIdOfMinter = async (address) => {
   try {
@@ -106,6 +107,7 @@ const fetchRelease = async (address, claimContractAddress) => {
       gasLimit: 100000,
     });
     console.log("fetchRelease", res)
+
     return true;
   } catch (error) {
     notify(error, "error");
@@ -148,6 +150,7 @@ const minterValidate = async (address) => {
 }
 
 const NFTDetailPage = () => {
+  const router = useRouter();
   const { active, address } = useWallet();
   const [loading, setLoading] = useState(true);
   const [mintedNft, setMintedNft] = useState({});
@@ -175,7 +178,8 @@ const NFTDetailPage = () => {
             setReleased(releasedAmount);
           }
         } else {
-          // notify("You are not minter", "error");
+          // return to home page
+          router.push("/");
         }
       } catch (error) {
         console.error("Error fetching data:", error);

@@ -8,11 +8,12 @@ import axios from "axios";
 import Layout from "Layout";
 import Footer from "@components/Footer";
 import { Loader } from "@lidofinance/lido-ui";
+import { useRouter } from "next/router";
 
 const useNFTData = (address) => {
   const [loading, setLoading] = useState(true);
   const [nfts, setNfts] = useState([]);
-
+  const router = useRouter();
   const fetchTokenOfOwnerByIndex = useCallback(
     async (index) => {
       try {
@@ -95,6 +96,9 @@ const useNFTData = (address) => {
       const nftDetails = await Promise.all(nftPromises);
       setNfts(nftDetails.filter(Boolean));
       setLoading(false);
+      if (Number(balance) === 0) {
+        router.push("/");
+      }
     } catch (error) {
       console.error("Error fetching NFTs:", error);
       setLoading(false);
