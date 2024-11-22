@@ -160,7 +160,7 @@ const Mint = () => {
   return (
     <Layout>
       <div className="w-full h-full">
-        <div className="p-4 flex flex-col items-center justify-center text-xl w-full">
+        <div className="p-4 flex flex-col items-center justify-center text-xl w-full mb-16">
           <img
             src={MintBg.src}
             className="mb-4 w-full aspect-square object-cover rounded-3xl md:w-1/3 lg:w-1/3 2xl:w-1/4"

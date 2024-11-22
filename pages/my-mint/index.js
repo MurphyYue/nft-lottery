@@ -221,7 +221,7 @@ const NFTDetailPage = () => {
             <Loader />
           </div>
         ) : mintedNft?.imageUrl || mintedNft?.tokenId ? (
-          <div className="flex justify-center flex-col items-center">
+          <div className="flex justify-center flex-col items-center mb-16">
             <img
               src={mintedNft.imageUrl}
               alt={
