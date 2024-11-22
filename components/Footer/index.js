@@ -11,15 +11,15 @@ import { LotteryContractConfig } from "@config/constants";
 const Footer = () => {
   return (
     <div className={styles.root}>
-      {/* <a
-        href="https://etherscan.io/address/0xa1d44063e25b6992893ddd3963cb589157cdba69"
+      <a
+        href="https://etherscan.io/address/0x6f4Ec68f61F5EC04A83a409DbB5496e5F70D434b"
         target="_blank"
         rel="noopener noreferrer"
         className={styles.beta}
       >
         <Etherscan className={styles.icon} />
         <span className="hidden sm:inline">Etherscan</span>
-      </a> */}
+      </a>
       <a
         href="https://x.com/vgod_not_vdog"
         target="_blank"
