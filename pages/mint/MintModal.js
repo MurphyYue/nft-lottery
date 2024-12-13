@@ -29,7 +29,6 @@ function MintModal({ open, onClose, onMint }) {
             placeholder="Enter inviter address"
             label="Email address"
             rightDecorator={<Button size="xs" onClick={handleMintClick}>Mint</Button>}
-            themeOverride="light"
             className="text-white [&_input]:text-white"
           />
         </div>

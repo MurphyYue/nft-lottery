@@ -76,6 +76,7 @@ export async function writeContract(operate, param) {
     dispatch(setSubmitModalParam({ state: receipt.status ? 'success' : 'failed' }));
     hashNotify(hashData.hash, receipt.status ? 'success' : 'failed');
   } catch (err) {
+    // console.error(err)
     const isInsufficientFundsError = err.walk((e) => e instanceof InsufficientFundsError);
     if (isInsufficientFundsError) {
       return Promise.reject('Insufficient funds');
@@ -87,6 +88,9 @@ export async function writeContract(operate, param) {
     }
     if (err?.cause?.shortMessage.includes("reason:")) {
       return Promise.reject(err?.cause?.shortMessage.split("reason:")[1]);
+    }
+    if (err?.cause?.shortMessage.includes('The fee cap')) {
+      return Promise.reject('Insufficient funds')
     }
     return Promise.reject(err?.cause?.shortMessage);
   }

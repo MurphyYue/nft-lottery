@@ -253,7 +253,6 @@ const NFTDetailPage = () => {
                 <Button
                   color="primary"
                   size="sm"
-                  themeoverride="light"
                   variant="filled"
                   onClick={handleRelease}
                   disabled={releasable === 0}

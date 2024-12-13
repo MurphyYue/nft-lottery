@@ -49,7 +49,7 @@ export default function Tabs({ tabs = [] }) {
       const nftNumber = await nftBalance(address);
       dispatch(setHasNft(nftNumber > 0 && active));
     }
-    fetchData();
+    active && fetchData();
   }, [address]);
   const { asPath } = useRouter();
   const { openConnectModal } = useConnectModal();

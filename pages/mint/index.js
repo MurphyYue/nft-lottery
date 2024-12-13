@@ -12,7 +12,7 @@ import { notify } from "@utils/msgNotify";
 import { Button } from "@lidofinance/lido-ui";
 import MintModal from "./MintModal";
 
-const useContractData = (address) => {
+const useContractData = (address, active) => {
   const [hasMinted, setHasMinted] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [salePrice, setSalePrice] = useState(0);
@@ -70,14 +70,16 @@ const useContractData = (address) => {
   };
 
   useEffect(() => {
-    // check if user has minted
-    checkHasMinted();
-    // check if mint is paused
-    fetchPaused();
-    // fetch sale price
-    fetchSalePrice();
-    // fetch discount amount
-    fetchDiscountAmount();
+    if (active) {
+      // check if user has minted
+      checkHasMinted();
+      // check if mint is paused
+      fetchPaused();
+      // fetch sale price
+      fetchSalePrice();
+      // fetch discount amount
+      fetchDiscountAmount();
+    }
   }, [address]);
 
   return {
@@ -98,7 +100,7 @@ const Mint = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   // contract data
   const { hasMinted, salePrice, isPaused, discountAmount } =
-    useContractData(address);
+    useContractData(address, active);
   // discountPrice is salePrice - discountAmount
   const discountPrice = BigInt(salePrice) - BigInt(discountAmount);
   // display price by eth
@@ -173,7 +175,6 @@ const Mint = () => {
               <Button
                 color="primary"
                 size="sm"
-                themeoverride="light"
                 variant="filled"
                 onClick={manageMint}
                 loading={minting}
