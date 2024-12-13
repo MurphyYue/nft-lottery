@@ -51,7 +51,7 @@ export async function sendTransaction(operate, data) {
 }
 
 
-// 获取当前的 gasPrice
+// get current gasPrice
 const getGasPrice = async () => {
   if (window.ethereum) {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -66,21 +66,16 @@ export async function writeContract(operate, param) {
   const _operate = capitalize(operate === 'broadcast' ? 'post' : operate);
 
   try {
-    const gasPrice = await getGasPrice(); // 获取当前的 gasPrice
-    console.log('gasPrice', gasPrice);
-    console.log("param", param);
-    const hashData = await writeContractWagmi({ ...param, gasPrice, gas: parseGwei('0.0007') }); // 设置 gasPrice
+    const gasPrice = await getGasPrice();
+    const hashData = await writeContractWagmi({ ...param, gasPrice, gas: parseGwei('0.0007') }); // set gasPrice
     dispatch(setSubmitModalParam({ type: _operate, state: 'submitted', hash: hashData.hash }));
-    console.log('hashData', hashData);
     const receipt = await waitForTransaction(hashData);
     if (receipt.status) {
       dispatch(setMinted(true));
     }
     dispatch(setSubmitModalParam({ state: receipt.status ? 'success' : 'failed' }));
     hashNotify(hashData.hash, receipt.status ? 'success' : 'failed');
-    console.log('receipt', receipt);
   } catch (err) {
-    console.log('error', err);
     const isInsufficientFundsError = err.walk((e) => e instanceof InsufficientFundsError);
     if (isInsufficientFundsError) {
       return Promise.reject('Insufficient funds');

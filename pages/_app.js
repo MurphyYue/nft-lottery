@@ -30,7 +30,7 @@ function MyApp({ Component, pageProps }) {
     if (jssStyles) {
       jssStyles.parentElement.removeChild(jssStyles);
     }
-    // 默认网络放到localStorage存储
+    // save the default network in localStorage
   window.localStorage.setItem("EXPLORER_HOST", EXPLORER_HOST_ETH);
   }, []);
 

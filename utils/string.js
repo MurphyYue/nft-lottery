@@ -15,14 +15,12 @@ export function trimTrailingZeros(numberString) {
   }
 }
 
-// 为数字添加千分符
 export function addThousandsSeparator(number) {
   const parts = number.toString().split('.');
   parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   return parts.join('.');
 }
 
-// 将数字改为千分制
 export function formatNumberToThousand(number = 0) {
   if (number < 1000) return number;
   return `${new BigNumber(number / 1000).toFixed(1, 1)}K`

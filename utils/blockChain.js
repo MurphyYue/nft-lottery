@@ -14,7 +14,6 @@ export const switchNetwork = async (chainId) => {
     });
     return true;
   } catch (err) {
-    console.error("切换网络出错", err);
     if (err.code !== 4001) {
       return await addNetwork(chainId);
     }
