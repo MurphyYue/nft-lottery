@@ -80,7 +80,7 @@ const useContractData = (address, active) => {
       // fetch discount amount
       fetchDiscountAmount();
     }
-  }, [address]);
+  }, [address, active]);
 
   return {
     hasMinted,

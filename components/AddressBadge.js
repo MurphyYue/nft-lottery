@@ -6,7 +6,7 @@ import Jazzicon, { jsNumberForAddress } from 'react-jazzicon';
 import { addressShortened } from '@utils/index';
 import AddressIcon from './AddressIcon';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     borderRadius: '100px',
     display: 'inline-flex',
@@ -34,10 +34,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AddressBadge({ address, mode }) {
+export default function AddressBadge({ address }) {
   const classes = useStyles();
   const openAccountInfo = useCallback(() => {
-    console.log(123);
     dispatch(setAccountModalOpen(true))
   }, [])
 

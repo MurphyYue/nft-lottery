@@ -13,7 +13,6 @@ import { setInviterAddress } from '@store/user';
 
 export const runtime = 'experimental-edge';
 
-
 function MyApp({ Component, pageProps }) {
   const router = useRouter(); 
   useEffect(() => {
@@ -24,6 +23,7 @@ function MyApp({ Component, pageProps }) {
       dispatch(setInviterAddress(''));
     }
   }, [router.query.inviterAddress]);
+
   useEffect(() => {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side');
@@ -31,7 +31,7 @@ function MyApp({ Component, pageProps }) {
       jssStyles.parentElement.removeChild(jssStyles);
     }
     // save the default network in localStorage
-  window.localStorage.setItem("EXPLORER_HOST", EXPLORER_HOST_ETH);
+    window.localStorage.setItem("EXPLORER_HOST", EXPLORER_HOST_ETH);
   }, []);
 
   return (

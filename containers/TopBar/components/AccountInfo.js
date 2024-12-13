@@ -63,7 +63,7 @@ function AccountInfo({ wallet }) {
   const EXPLORER_HOST = useMemo(() => getHostByNet(selectedNetwork), [selectedNetwork])
   const handleEtherscan = useCallback(() => {
     window.open(`${EXPLORER_HOST}/address/${address}`)
-  }, [])
+  }, [EXPLORER_HOST, address]);
   
   const [inviteLink, setInviteLink] = useState('');
   const copyInviteLink = useCopyToClipboard(inviteLink ?? '');
@@ -71,20 +71,19 @@ function AccountInfo({ wallet }) {
 
   const handleClose = useCallback(() => {
     dispatch(setAccountModalOpen(false))
-  }, [])
+  }, []);
 
   const handleDisconnect = useCallback(() => {
     disconnect();
-    // if the page is not home or mint page then redirect to home
     const { pathname } = router;
     if (pathname !== '/' && pathname !== '/mint') {
       router.push("/");
     }
     dispatch(setAccountModalOpen(false))
-  }, [])
+  }, [router, disconnect]);
 
   const [nftToken, setNftToken] = useState('');
-  const tokenOfOwnerByIndex = async () => {
+  const tokenOfOwnerByIndex = useCallback(async () => {
     try {
       const res = await readContract({
         ...LotteryContractConfig,
@@ -96,11 +95,19 @@ function AccountInfo({ wallet }) {
     } catch (error) {
       console.log(error);
     }
-  };
-  useEffect(() => {
-    // address && tokenOfOwnerByIndex();
-    setInviteLink(`${window.location.origin}/mint?inviterAddress=${address}`);
   }, [address]);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setInviteLink(`${window.location.origin}/mint?inviterAddress=${address}`);
+    }
+  }, [address]);
+
+  useEffect(() => {
+    if (address) {
+      tokenOfOwnerByIndex();
+    }
+  }, [address, tokenOfOwnerByIndex]);
 
   const goDetail = () => {
     router.push('/my-nft');
