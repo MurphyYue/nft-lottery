@@ -11,7 +11,8 @@
     "lint:fix": "yarn lint --fix",
     "preview": "http-server -p 8000",
     "update": "pnpm install && pnpm prune",
-    "pages:build": "npx @cloudflare/next-on-pages"
+    "pages:build": "npx @cloudflare/next-on-pages",
+    "serve": "npx serve@latest out"
   },
   "dependencies": {
     "@lidofinance/lido-ui": "^3.8.1",
