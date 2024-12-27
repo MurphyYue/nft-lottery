@@ -42,6 +42,7 @@ function MyApp({ Component, pageProps }) {
           name='viewport'
           content='minimum-scale=1, initial-scale=1, width=device-width'
         />
+        <meta name="google-site-verification" content="X_UCDHzIzPVDU94YLZckI0kjAqYD6t8uLLLosmvysDM" />
       </Head>
       <Provider store={store}>
         <CookieThemeProvider overrideThemeName={'dark'}>
