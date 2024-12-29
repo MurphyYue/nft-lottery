@@ -37,34 +37,6 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <>
-      <DefaultSeo
-        title="VGOD Not VDOG - Eth Stronger, Eth Bigger"
-        description="Join the VGOD community and explore the power of Ethereum. Eth stronger, Eth bigger, and more!" // Optimized description
-        openGraph={{
-          type: "website",
-          locale: "en_US",
-          url: "https://www.vgod-not-vdog.com/",
-          siteName: "VGOD Not VDOG",
-          title: "VGOD Not VDOG - Eth Stronger, Eth Bigger",
-          description:
-            "Join the VGOD community and explore the power of Ethereum. Eth stronger, Eth bigger, and more!",
-          images: [
-            {
-              url: "https://x.com/vgod_not_vdog/header_photo",
-              width: 800,
-              height: 600,
-              alt: "VGOD Not VDOG",
-            },
-            {
-              url: 'https://pbs.twimg.com/media/GdHJRTragAELhsG?format=jpg&name=medium',
-              width: 800,
-              height: 600,
-              alt: 'vgod Image Alt',
-              type: 'image/jpeg',
-            }
-          ],
-        }}
-      />
       <Head>
         <title>VGod Not VDog</title>
         <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />

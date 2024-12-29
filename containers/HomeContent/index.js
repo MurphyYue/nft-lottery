@@ -5,6 +5,7 @@ import HomeBg4 from "@images/ether_4.png";
 import { useState, useEffect } from "react";
 import { readContract } from "@wagmi/core";
 import { LotteryContractConfig } from "@config/constants";
+import { DefaultSeo } from "next-seo";
 
 const Home = () => {
   const [isPaused, setIsPaused] = useState(false);
@@ -25,90 +26,118 @@ const Home = () => {
     fetchPaused();
   }, []);
   return (
-    <div
-      className="px-4 sm:px-8 lg:px-16 overflow-y-auto"
-      style={{ height: "calc(100vh - 152px)" }}
-    >
-      <main>
-        <div className="w-full text-center text-4xl font-semibold py-4">
-          {isPaused ? "Mint coming soon!" : null}
-        </div>
-        <div>
-          <div className="flex flex-col md:flex-row md:even:flex-row-reverse">
-            <div className="w-full md:max-w-[30%]">
-              <h3 className="text-2xl md:text-4xl font-semibold text-center md:text-left md:mt-12">
-                Strongest Consensus:
-              </h3>
-              <p className="text-base md:text-2xl md:mt-10 mb-2 leading-relaxed text-gray-700 text-center md:text-left">
-                Bigger! Stronger!
-              </p>
-              <p className="text-base md:text-2xl md:mt-10 mb-2 leading-relaxed text-gray-700 text-center md:text-left">
-                Let's talk about ETH market value!
-              </p>
-              <p className="text-base md:text-2xl md:mt-10 mb-2 leading-relaxed text-gray-700 text-center md:text-left">
-                Check out Vitalik Buterin's AI Immortal Virtual Human!
-              </p>
+    <>
+      <DefaultSeo
+        title="VGOD Not VDOG - Make Eth Bigger Stronger!"
+        description="Join the VGOD community and explore the power of Ethereum. Eth stronger, Eth bigger, and more!" // Optimized description
+        openGraph={{
+          type: "website",
+          locale: "en_US",
+          url: "https://www.vgod-not-vdog.com/",
+          siteName: "VGOD Not VDOG",
+          title: "VGOD Not VDOG - Eth Stronger, Eth Bigger",
+          description:
+            "Join the VGOD community and explore the power of Ethereum. Eth stronger, Eth bigger, and more!",
+          images: [
+            {
+              url: "https://x.com/vgod_not_vdog/header_photo",
+              width: 800,
+              height: 600,
+              alt: "VGOD Not VDOG",
+            },
+            {
+              url: "https://pbs.twimg.com/media/GdHJRTragAELhsG?format=jpg&name=medium",
+              width: 800,
+              height: 600,
+              alt: "vgod Image Alt",
+              type: "image/jpeg",
+            },
+          ],
+        }}
+      />
+      <div
+        className="px-4 sm:px-8 lg:px-16 overflow-y-auto"
+        style={{ height: "calc(100vh - 152px)" }}
+      >
+        <main>
+          <div className="w-full text-center text-4xl font-semibold py-4">
+            {isPaused ? "Mint coming soon!" : null}
+          </div>
+          <div>
+            <div className="flex flex-col md:flex-row md:even:flex-row-reverse">
+              <div className="w-full md:max-w-[30%]">
+                <h3 className="text-2xl md:text-4xl font-semibold text-center md:text-left md:mt-12">
+                  Strongest Consensus:
+                </h3>
+                <p className="text-base md:text-2xl md:mt-10 mb-2 leading-relaxed text-gray-700 text-center md:text-left">
+                  Bigger! Stronger!
+                </p>
+                <p className="text-base md:text-2xl md:mt-10 mb-2 leading-relaxed text-gray-700 text-center md:text-left">
+                  Let's talk about ETH market value!
+                </p>
+                <p className="text-base md:text-2xl md:mt-10 mb-2 leading-relaxed text-gray-700 text-center md:text-left">
+                  Check out Vitalik Buterin's AI Immortal Virtual Human!
+                </p>
+              </div>
+              <div className="rounded-3xl w-full mb-4 sm:mb-10 overflow-hidden relative">
+                <img src={HomeBg4.src} className="w-full object-cover z-[1]" />
+              </div>
             </div>
-            <div className="rounded-3xl w-full mb-4 sm:mb-10 overflow-hidden relative">
-              <img src={HomeBg4.src} className="w-full object-cover z-[1]" />
+            <div className="flex flex-col md:flex-row md:even:flex-row-reverse">
+              <div className="w-full md:max-w-[30%] ml-0 md:ml-4">
+                <h3 className="text-2xl md:text-4xl font-semibold text-center md:text-left md:mt-12">
+                  Win-Win:
+                </h3>
+                <p className="text-base md:text-2xl md:mt-10 mb-2 leading-relaxed text-gray-700 text-left">
+                  ERC721-C: Minters earn 3% royalties on every transaction.
+                </p>
+                <p className="text-base md:text-2xl md:mt-10 mb-2 leading-relaxed text-gray-700 text-left">
+                  Get a random Token ID.
+                </p>
+                <p className="text-base md:text-2xl md:mt-10 mb-2 leading-relaxed text-gray-700 text-left">
+                  One token per address.
+                </p>
+                <p className="text-base md:text-2xl md:mt-10 mb-2 leading-relaxed text-gray-700 text-left">
+                  Creators, Minters, Inviters, and Traders all share equal rights.
+                </p>
+              </div>
+              <div className="rounded-3xl w-full mb-4 sm:mb-10 overflow-hidden relative">
+                <img src={HomeBg1.src} className="w-full object-cover z-[1]" />
+              </div>
+            </div>
+            <div className="flex flex-col md:flex-row md:even:flex-row-reverse">
+              <div className="w-full md:max-w-[30%] ml-0 md:ml-4">
+                <h3 className="text-2xl md:text-4xl font-semibold text-center md:text-left md:mt-12">
+                  Meme Token:
+                </h3>
+                <p className="text-base md:text-2xl md:mt-10 mb-2 leading-relaxed text-gray-700 text-left">
+                  Build the strongest consensus and reach the biggest market cap.
+                </p>
+                <p className="text-base md:text-2xl md:mt-10 mb-2 leading-relaxed text-gray-700 text-left">
+                  Distribute Meme tokens to creators, minters, inviters, and traders.
+                </p>
+              </div>
+              <div className="rounded-3xl w-full mb-4 sm:mb-10 overflow-hidden relative">
+                <img src={HomeBg2.src} className="w-full object-cover z-[1]" />
+              </div>
+            </div>
+            <div className="flex flex-col md:flex-row md:even:flex-row-reverse">
+              <div className="w-full md:max-w-[30%] ml-0 md:ml-4">
+                <h3 className="text-2xl md:text-4xl font-semibold text-center md:text-left md:mt-12">
+                  Together:
+                </h3>
+                <p className="text-base md:text-2xl md:mt-10 mb-2 leading-relaxed text-gray-700 text-left">
+                  Let's supercharge the Ethereum ecosystem for even more growth and innovation!
+                </p>
+              </div>
+              <div className="rounded-3xl w-full mb-4 sm:mb-10 overflow-hidden relative">
+                <img src={HomeBg3.src} className="w-full object-cover z-[1]" />
+              </div>
             </div>
           </div>
-          <div className="flex flex-col md:flex-row md:even:flex-row-reverse">
-            <div className="w-full md:max-w-[30%] ml-0 md:ml-4">
-              <h3 className="text-2xl md:text-4xl font-semibold text-center md:text-left md:mt-12">
-                Win-Win:
-              </h3>
-              <p className="text-base md:text-2xl md:mt-10 mb-2 leading-relaxed text-gray-700 text-left">
-                ERC721-C: Minters earn 3% royalties on every transaction.
-              </p>
-              <p className="text-base md:text-2xl md:mt-10 mb-2 leading-relaxed text-gray-700 text-left">
-                Get a random Token ID.
-              </p>
-              <p className="text-base md:text-2xl md:mt-10 mb-2 leading-relaxed text-gray-700 text-left">
-                One token per address.
-              </p>
-              <p className="text-base md:text-2xl md:mt-10 mb-2 leading-relaxed text-gray-700 text-left">
-                Creators, Minters, Inviters, and Traders all share equal rights.
-              </p>
-            </div>
-            <div className="rounded-3xl w-full mb-4 sm:mb-10 overflow-hidden relative">
-              <img src={HomeBg1.src} className="w-full object-cover z-[1]" />
-            </div>
-          </div>
-          <div className="flex flex-col md:flex-row md:even:flex-row-reverse">
-            <div className="w-full md:max-w-[30%] ml-0 md:ml-4">
-              <h3 className="text-2xl md:text-4xl font-semibold text-center md:text-left md:mt-12">
-                Meme Token:
-              </h3>
-              <p className="text-base md:text-2xl md:mt-10 mb-2 leading-relaxed text-gray-700 text-left">
-                Build the strongest consensus and reach the biggest market cap.
-              </p>
-              <p className="text-base md:text-2xl md:mt-10 mb-2 leading-relaxed text-gray-700 text-left">
-                Distribute Meme tokens to creators, minters, inviters, and
-                traders.
-              </p>
-            </div>
-            <div className="rounded-3xl w-full mb-4 sm:mb-10 overflow-hidden relative">
-              <img src={HomeBg2.src} className="w-full object-cover z-[1]" />
-            </div>
-          </div>
-          <div className="flex flex-col md:flex-row md:even:flex-row-reverse">
-            <div className="w-full md:max-w-[30%] ml-0 md:ml-4">
-              <h3 className="text-2xl md:text-4xl font-semibold text-center md:text-left md:mt-12">
-                Together:
-              </h3>
-              <p className="text-base md:text-2xl md:mt-10 mb-2 leading-relaxed text-gray-700 text-left">
-                Let's supercharge the Ethereum ecosystem for even more growth
-                and innovation!
-              </p>
-            </div>
-            <div className="rounded-3xl w-full mb-4 sm:mb-10 overflow-hidden relative">
-              <img src={HomeBg3.src} className="w-full object-cover z-[1]" />
-            </div>
-          </div>
-        </div>
-      </main>
-    </div>
+        </main>
+      </div>
+    </>
   );
 };
 
