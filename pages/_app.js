@@ -10,6 +10,8 @@ import '../globals.css';
 import { useRouter } from 'next/router';
 import { dispatch } from '@store/index';
 import { setInviterAddress } from '@store/user';
+import { DefaultSeo } from "next-seo";
+import SEO from "../next-seo.config";
 
 export const runtime = 'experimental-edge';
 
@@ -36,16 +38,18 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <>
+      <DefaultSeo {...SEO} />
       <Head>
         <title>VGod Not VDog</title>
+        <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
+        <meta name="robots" content="index, vgod, vdog, eth stronger" />
         <meta
-          name='viewport'
-          content='minimum-scale=1, initial-scale=1, width=device-width'
+          name="google-site-verification"
+          content="X_UCDHzIzPVDU94YLZckI0kjAqYD6t8uLLLosmvysDM"
         />
-        <meta name="google-site-verification" content="X_UCDHzIzPVDU94YLZckI0kjAqYD6t8uLLLosmvysDM" />
       </Head>
       <Provider store={store}>
-        <CookieThemeProvider overrideThemeName={'dark'}>
+        <CookieThemeProvider overrideThemeName={"dark"}>
           <WalletProvider>
             <Component {...pageProps} />
           </WalletProvider>

@@ -5,13 +5,10 @@ import { LidoUIHead } from '@lidofinance/lido-ui';
 export default class MyDocument extends Document {
   render() {
     return (
-      <Html lang='en'>
+      <Html lang="en">
         <Head>
-          <link
-            rel='icon'
-            type='image/ico'
-            href={`${process.env.BASE_PATH}/favicon.ico`}
-          />
+          <link rel="icon" type="image/ico" href={`${process.env.BASE_PATH}/favicon.ico`} />
+          <meta name="robots" content="index, vgod, vdog, eth stronger" />
           <LidoUIHead />
         </Head>
         <body>
